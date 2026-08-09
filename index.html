@@ -1,689 +1,908 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<title>Amiryasin Hosseini</title>
+  <title>Amiryasin Hosseini — Personal Knowledge Space</title>
+  <meta name="description" content="A personal knowledge space about biology, neuroscience, genetics, evolution and scientific thinking." />
 
-<meta name="description"
-content="Amiryasin Hosseini — personal knowledge space">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #080b0d;
+      --surface: #0d1215;
+      --surface-2: #11191d;
+      --border: rgba(190, 220, 207, 0.14);
+      --text: #e8eee9;
+      --muted: #899792;
+      --soft: #b9c9c0;
+      --accent: #a8f0c2;
+      --accent-2: #70c797;
+      --danger: #ff8c8c;
+      --shadow: 0 24px 80px rgba(0,0,0,.32);
+      --radius: 22px;
+    }
 
-<link rel="stylesheet" href="style.css">
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 85% 5%, rgba(102, 214, 153, .12), transparent 28rem),
+        radial-gradient(circle at 10% 45%, rgba(55, 121, 94, .09), transparent 24rem),
+        var(--bg);
+      color: var(--text);
+      font-family: "Manrope", "Inter", sans-serif;
+      line-height: 1.7;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+      z-index: 10;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button, select, textarea, input {
+      font: inherit;
+    }
+
+    .container {
+      width: min(1160px, calc(100% - 42px));
+      margin: auto;
+    }
+
+    .topbar {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(8, 11, 13, .78);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      font-family: "DM Mono", monospace;
+      color: var(--accent);
+      letter-spacing: .08em;
+      font-size: .85rem;
+    }
+
+    .nav {
+      display: flex;
+      gap: 24px;
+      color: var(--muted);
+      font-size: .78rem;
+      font-family: "DM Mono", monospace;
+    }
+
+    .nav a {
+      transition: color .25s ease;
+    }
+
+    .nav a:hover {
+      color: var(--accent);
+    }
+
+    .hero {
+      min-height: 650px;
+      display: grid;
+      align-items: center;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 70px;
+      padding: 100px 0 90px;
+    }
+
+    .eyebrow, .section-number, .label {
+      color: var(--accent);
+      font-family: "DM Mono", monospace;
+      font-size: .7rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin-top: 22px;
+      max-width: 700px;
+      font-size: clamp(3.3rem, 8vw, 7.8rem);
+      line-height: .92;
+      letter-spacing: -.09em;
+      font-weight: 800;
+    }
+
+    h1 span {
+      color: var(--soft);
+      font-weight: 400;
+    }
+
+    .hero-copy {
+      margin-top: 30px;
+      color: var(--muted);
+      max-width: 600px;
+      font-size: 1.07rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    .button {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      color: var(--text);
+      padding: 11px 17px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: .25s ease;
+      font-size: .82rem;
+    }
+
+    .button:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .button.primary {
+      color: #08110c;
+      background: var(--accent);
+      border-color: var(--accent);
+      font-weight: 700;
+    }
+
+    .orb {
+      width: min(360px, 80vw);
+      height: min(360px, 80vw);
+      border: 1px solid rgba(168,240,194,.35);
+      border-radius: 50%;
+      margin: auto;
+      position: relative;
+      box-shadow:
+        0 0 0 25px rgba(168,240,194,.025),
+        0 0 0 60px rgba(168,240,194,.018),
+        0 0 90px rgba(93, 213, 139, .14);
+      animation: float 7s ease-in-out infinite;
+    }
+
+    .orb::before,
+    .orb::after {
+      content: "";
+      position: absolute;
+      inset: 17%;
+      border: 1px solid rgba(168,240,194,.22);
+      border-radius: 50%;
+      transform: rotate(55deg) scaleX(.52);
+    }
+
+    .orb::after {
+      transform: rotate(-55deg) scaleX(.52);
+    }
+
+    .orb-center {
+      position: absolute;
+      width: 19px;
+      height: 19px;
+      background: var(--accent);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 30px var(--accent);
+    }
+
+    @keyframes float {
+      50% { transform: translateY(-12px) rotate(2deg); }
+    }
+
+    section {
+      padding: 90px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 30px;
+      margin-bottom: 36px;
+    }
+
+    h2 {
+      margin-top: 12px;
+      font-size: clamp(2rem, 4vw, 4rem);
+      letter-spacing: -.07em;
+      line-height: 1;
+    }
+
+    .section-description {
+      color: var(--muted);
+      max-width: 390px;
+      font-size: .92rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .card {
+      background: linear-gradient(145deg, rgba(255,255,255,.045), rgba(255,255,255,.015));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 25px;
+      min-height: 190px;
+      transition: .3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      background: var(--accent);
+      filter: blur(80px);
+      opacity: 0;
+      right: -40px;
+      bottom: -50px;
+      transition: opacity .3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(168,240,194,.35);
+      box-shadow: var(--shadow);
+    }
+
+    .card:hover::after {
+      opacity: .14;
+    }
+
+    .card h3 {
+      margin: 20px 0 8px;
+      font-size: 1.1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card p, .card li {
+      color: var(--muted);
+      font-size: .88rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
+
+    .tag {
+      color: var(--soft);
+      border: 1px solid var(--border);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-family: "DM Mono", monospace;
+      font-size: .72rem;
+      transition: .25s ease;
+    }
+
+    .tag:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .focus-panel {
+      border: 1px solid rgba(168,240,194,.2);
+      background: linear-gradient(120deg, rgba(168,240,194,.08), rgba(255,255,255,.02));
+      border-radius: var(--radius);
+      padding: 42px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    .focus-panel h3 {
+      font-size: clamp(1.7rem, 4vw, 3.4rem);
+      line-height: 1.1;
+      letter-spacing: -.06em;
+    }
+
+    .focus-panel p {
+      color: var(--muted);
+    }
+
+    .article {
+      min-height: 270px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .article .article-number {
+      color: var(--accent);
+      font-family: "DM Mono", monospace;
+      font-size: .75rem;
+    }
+
+    .article h3 {
+      font-size: 1.45rem;
+      letter-spacing: -.04em;
+    }
+
+    .article-link {
+      color: var(--accent);
+      font-family: "DM Mono", monospace;
+      font-size: .75rem;
+    }
+
+    .lab {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .tool-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 26px;
+    }
+
+    textarea, input, select {
+      width: 100%;
+      background: #080c0e;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      padding: 13px;
+      outline: none;
+      margin-top: 14px;
+    }
+
+    textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    textarea:focus, input:focus, select:focus {
+      border-color: var(--accent);
+    }
+
+    .tool-panel .button {
+      margin-top: 13px;
+    }
+
+    .output {
+      color: var(--soft);
+      min-height: 120px;
+      margin-top: 18px;
+      padding: 17px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.025);
+      border: 1px solid var(--border);
+      white-space: pre-wrap;
+    }
+
+    .language-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .language-row select {
+      flex: 1;
+    }
+
+    footer {
+      padding: 35px 0 55px;
+      color: var(--muted);
+      font-size: .8rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      font-family: "DM Mono", monospace;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity .8s ease, transform .8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 800px) {
+      .nav {
+        display: none;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 70px;
+      }
+
+      .orb {
+        width: 240px;
+        height: 240px;
+      }
+
+      .grid, .lab, .focus-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        flex-direction: column;
+      }
+
+      footer {
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="noise"></div>
+  <header class="topbar">
+    <div class="container" style="display:flex;justify-content:space-between;align-items:center;width:100%;">
+      <a class="brand" href="#top">AY / KNOWLEDGE SPACE</a>
 
-<header class="header">
-
-```
-<div class="container nav">
-
-    <a href="#" class="logo">
-        amiryasin<span>.hosseini</span>
-    </a>
-
-    <div class="nav-actions">
-
-        <button class="language-button" id="languageButton">
-            <span>EN</span>
-            <span class="arrow">⌄</span>
-        </button>
-
-        <button class="command-button" id="commandButton">
-            <span>⌘</span>
-            <span>K</span>
-        </button>
-
-        <a href="#about" class="nav-link" data-i18n="about">
-            About
-        </a>
-
+      <nav class="nav">
+        <a href="#overview" data-i18n="nav_overview">overview</a>
+        <a href="#research" data-i18n="nav_research">research</a>
+        <a href="#lab" data-i18n="nav_lab">text lab</a>
+        <a href="#about" data-i18n="nav_about">about</a>
+      </nav>
     </div>
+  </header>
 
-</div>
-```
+  <main id="top">
 
-</header>
+    <section class="hero container reveal">
+      <div>
+        <div class="eyebrow" data-i18n="eyebrow">PERSONAL KNOWLEDGE SPACE</div>
 
-<main class="container">
+        <h1>
+          Amiryasin<br>
+          <span>Hosseini.</span>
+        </h1>
 
-<section class="hero reveal">
+        <p class="hero-copy" data-i18n="hero_text">
+          Student interested in understanding living systems — from molecules and genes to the brain, cognition and evolution.
+        </p>
 
-```
-<div class="eyebrow">
-    <span class="status-dot"></span>
-    <span data-i18n="personal_space">
-        PERSONAL KNOWLEDGE SPACE
-    </span>
-</div>
+        <div class="hero-actions">
+          <a href="#research" class="button primary" data-i18n="explore">Explore the space</a>
+          <a href="#lab" class="button" data-i18n="open_lab">Open text lab</a>
+        </div>
+      </div>
 
-<h1>
-    Amiryasin<br>
-    <span>Hosseini.</span>
-</h1>
+      <div class="orb" aria-hidden="true">
+        <div class="orb-center"></div>
+      </div>
+    </section>
 
-<p class="hero-description"
-   data-i18n="hero_description">
+    <section id="overview">
+      <div class="container reveal">
+        <div class="section-head">
+          <div>
+            <div class="section-number">01 / <span data-i18n="overview">overview</span></div>
+            <h2 data-i18n="interests_title">Interests</h2>
+          </div>
 
-    Student interested in understanding living systems —
-    from molecules and genes to the brain, cognition and evolution.
-
-</p>
-
-<div class="tags">
-
-    <span>neuroscience</span>
-    <span>genetics</span>
-    <span>molecular biology</span>
-    <span>evolution</span>
-    <span>cognitive science</span>
-    <span>bioinformatics</span>
-
-</div>
-```
-
-</section>
-
-<section class="section reveal">
-
-```
-<div class="section-label">
-    01 / overview
-</div>
-
-
-<div class="grid">
-
-
-    <article class="card">
-
-        <div class="card-index">01</div>
-
-        <h2 data-i18n="interests">
-            Interests
-        </h2>
-
-        <div class="interest-list">
-
-            <span>Neuroscience</span>
-            <span>Genetics</span>
-            <span>Genomics</span>
-            <span>Molecular Biology</span>
-            <span>Cell Biology</span>
-            <span>Evolution</span>
-            <span>Cognitive Science</span>
-            <span>Neurobiology</span>
-            <span>Bioinformatics</span>
-
+          <p class="section-description" data-i18n="overview_description">
+            A map of the questions, systems and disciplines I keep returning to.
+          </p>
         </div>
 
-    </article>
+        <div class="tags">
+          <span class="tag">Neuroscience</span>
+          <span class="tag">Genetics</span>
+          <span class="tag">Genomics</span>
+          <span class="tag">Molecular Biology</span>
+          <span class="tag">Cell Biology</span>
+          <span class="tag">Evolution</span>
+          <span class="tag">Cognitive Science</span>
+          <span class="tag">Neurobiology</span>
+          <span class="tag">Bioinformatics</span>
+        </div>
 
+        <div class="grid" style="margin-top:22px;">
+          <article class="card">
+            <div class="label">01</div>
+            <h3 data-i18n="approach_title">Approach</h3>
+            <p data-i18n="approach_text">
+              Curious about how complex biological systems emerge from interactions between simpler components — and how those systems eventually produce cognition and behavior.
+            </p>
+          </article>
 
+          <article class="card">
+            <div class="label">02</div>
+            <h3 data-i18n="projects_title">Projects</h3>
+            <p data-i18n="projects_text">
+              Experiments, small software projects, scientific notes, computational ideas and things worth building.
+            </p>
+          </article>
 
-    <article class="card">
+          <article class="card">
+            <div class="label">03</div>
+            <h3 data-i18n="notes_title">Notes</h3>
+            <p data-i18n="notes_text">
+              Short observations, concepts, questions and explanations collected while learning.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
 
-        <div class="card-index">02</div>
+    <section>
+      <div class="container reveal">
+        <div class="section-head">
+          <div>
+            <div class="section-number">02 / <span data-i18n="now">now</span></div>
+            <h2 data-i18n="focus_title">Current Focus</h2>
+          </div>
+        </div>
 
-        <h2 data-i18n="approach">
-            Approach
-        </h2>
-
-        <p data-i18n="approach_text">
-
-            Curious about how complex biological systems emerge
-            from interactions between simpler components — and how
-            those systems eventually produce cognition and behavior.
-
-        </p>
-
-    </article>
-
-
-
-    <article class="card">
-
-        <div class="card-index">03</div>
-
-        <h2 data-i18n="projects">
-            Projects
-        </h2>
-
-        <p data-i18n="projects_text">
-
-            Experiments, small software projects, scientific notes,
-            computational ideas and things worth building.
-
-        </p>
-
-    </article>
-
-
-
-    <article class="card">
-
-        <div class="card-index">04</div>
-
-        <h2 data-i18n="notes">
-            Notes
-        </h2>
-
-        <p data-i18n="notes_text">
-
-            Short observations, concepts, questions and explanations
-            collected while learning.
-
-        </p>
-
-    </article>
-
-
-</div>
-```
-
-</section>
-
-<section class="section reveal">
-
-```
-<div class="section-label">
-    02 / now
-</div>
-
-<div class="now-card">
-
-    <div class="now-title">
-
-        <span class="accent-line"></span>
-
-        <span data-i18n="current_focus">
-            CURRENT FOCUS
-        </span>
-
-    </div>
-
-    <div>
-
-        <h2 data-i18n="brain_title">
+        <div class="focus-panel">
+          <h3 data-i18n="focus_heading">
             Understanding the brain as a biological system.
-        </h2>
+          </h3>
 
-        <p data-i18n="brain_text">
+          <p data-i18n="focus_text">
+            Exploring the relationship between genetics, cellular mechanisms, neural circuits, cognition and behavior.
+          </p>
+        </div>
+      </div>
+    </section>
 
-            Exploring the relationship between genetics,
-            cellular mechanisms, neural circuits, cognition
-            and behavior.
+    <section id="research">
+      <div class="container reveal">
+        <div class="section-head">
+          <div>
+            <div class="section-number">03 / <span data-i18n="research">research</span></div>
+            <h2 data-i18n="research_title">Reading Material</h2>
+          </div>
 
-        </p>
-
-    </div>
-
-</div>
-```
-
-</section>
-
-<section class="section reveal">
-
-```
-<div class="section-label">
-    03 / research
-</div>
-
-<div class="articles-header">
-
-    <div>
-
-        <h2 data-i18n="evolution">
-            Evolution
-        </h2>
-
-        <p data-i18n="evolution_subtitle">
-            A small collection of notes and reading material.
-        </p>
-
-    </div>
-
-    <span class="file-count">
-        03 FILES
-    </span>
-
-</div>
-
-
-<div class="article-grid">
-
-
-    <article class="article-card">
-
-        <div class="article-top">
-            <span>01</span>
-            <span>PDF / NOTE</span>
+          <p class="section-description" data-i18n="research_description">
+            Scientific articles and notes about evolutionary processes. These texts are intentionally excluded from automatic interface translation.
+          </p>
         </div>
 
-        <h3>
-            Natural Selection
-        </h3>
-
-        <p>
-            How variation, heritability and differential
-            reproductive success produce evolutionary change.
-        </p>
-
-        <button
-            class="article-button"
-            onclick="openArticle('selection')">
-
-            Read article →
-
-        </button>
-
-    </article>
-
-
-
-    <article class="article-card">
-
-        <div class="article-top">
-            <span>02</span>
-            <span>PDF / NOTE</span>
-        </div>
-
-        <h3>
-            Genetic Drift
-        </h3>
-
-        <p>
-            Why random sampling can change allele frequencies,
-            especially in small populations.
-        </p>
-
-        <button
-            class="article-button"
-            onclick="openArticle('drift')">
-
-            Read article →
-
-        </button>
-
-    </article>
-
-
-
-    <article class="article-card">
-
-        <div class="article-top">
-            <span>03</span>
-            <span>PDF / NOTE</span>
-        </div>
-
-        <h3>
-            Evolution &amp; Genetics
-        </h3>
-
-        <p>
-            A compact introduction to the connection between
-            genetic variation and evolutionary processes.
-        </p>
-
-        <button
-            class="article-button"
-            onclick="openArticle('genetics')">
-
-            Read article →
-
-        </button>
-
-    </article>
-
-
-</div>
-```
-
-</section>
-
-<section class="section reveal" id="lab">
-
-```
-<div class="section-label">
-    04 / intelligence
-</div>
-
-
-<div class="ai-card">
-
-    <div class="ai-header">
-
-        <div>
-
-            <div class="ai-title">
-
-                <span class="ai-dot"></span>
-
-                Scientific AI
-
+        <!-- مقاله‌ها ترجمه نمی‌شوند، چون data-i18n ندارند -->
+        <div class="grid">
+          <article class="card article">
+            <div class="article-number">ARTICLE / 001</div>
+            <div>
+              <h3>Natural Selection</h3>
+              <p>
+                How variation, heritability and differential reproductive success produce evolutionary change.
+              </p>
             </div>
+            <a class="article-link" href="#" onclick="showArticle('Natural Selection')">read note →</a>
+          </article>
 
-            <p data-i18n="ai_subtitle">
-
-                Ask questions about biology, neuroscience,
-                genetics, evolution and related sciences.
-
-            </p>
-
-        </div>
-
-        <span class="ai-badge">
-            RESEARCH MODE
-        </span>
-
-    </div>
-
-
-
-    <div class="ai-messages" id="aiMessages">
-
-        <div class="ai-message system">
-
-            <span class="message-label">
-                SYSTEM
-            </span>
-
-            <p data-i18n="ai_welcome">
-
-                Ask a scientific question. The assistant is
-                designed to explain concepts clearly and
-                distinguish established knowledge from uncertainty.
-
-            </p>
-
-        </div>
-
-    </div>
-
-
-
-    <div class="ai-input-area">
-
-        <textarea
-            id="aiInput"
-            placeholder="Ask a scientific question..."
-            data-placeholder="ai_placeholder">
-        </textarea>
-
-
-        <div class="ai-controls">
-
-            <div class="ai-modes">
-
-                <button class="mode active">
-                    Explain
-                </button>
-
-                <button class="mode">
-                    Analyze
-                </button>
-
-                <button class="mode">
-                    Summarize
-                </button>
-
+          <article class="card article">
+            <div class="article-number">ARTICLE / 002</div>
+            <div>
+              <h3>Genetic Drift</h3>
+              <p>
+                Why random sampling can change allele frequencies, especially in small populations.
+              </p>
             </div>
+            <a class="article-link" href="#" onclick="showArticle('Genetic Drift')">read note →</a>
+          </article>
 
+          <article class="card article">
+            <div class="article-number">ARTICLE / 003</div>
+            <div>
+              <h3>Evolution & Genetics</h3>
+              <p>
+                A compact introduction to the connection between genetic variation and evolutionary processes.
+              </p>
+            </div>
+            <a class="article-link" href="#" onclick="showArticle('Evolution & Genetics')">read note →</a>
+          </article>
+        </div>
+      </div>
+    </section>
 
-            <button
-                class="send-button"
-                id="sendButton">
+    <section id="lab">
+      <div class="container reveal">
+        <div class="section-head">
+          <div>
+            <div class="section-number">04 / <span data-i18n="lab">intelligence & text</span></div>
+            <h2 data-i18n="lab_title">Text Lab</h2>
+          </div>
 
-                Ask AI
-                <span>↗</span>
+          <p class="section-description" data-i18n="lab_description">
+            Small utilities for thinking, translating and working with scientific text.
+          </p>
+        </div>
 
+        <div class="lab">
+
+          <div class="tool-panel">
+            <div class="label">SCIENTIFIC AI</div>
+            <h3 style="margin-top:12px;" data-i18n="ai_title">Ask a scientific question</h3>
+
+            <textarea id="question" data-placeholder="question_placeholder"
+              placeholder="Ask something about biology, neuroscience, genetics or evolution..."></textarea>
+
+            <button class="button primary" onclick="answerQuestion()" data-i18n="ask_button">
+              Ask
             </button>
 
-        </div>
+            <div id="answer" class="output" data-i18n="ai_default">
+              The assistant will explain concepts clearly and distinguish established knowledge from uncertainty.
+            </div>
+          </div>
 
-    </div>
+          <div class="tool-panel">
+            <div class="label">79 LANGUAGES</div>
+            <h3 style="margin-top:12px;" data-i18n="translation_title">Interface translation</h3>
 
-</div>
-```
-
-</section>
-
-<section class="section reveal" id="lab-text">
-
-```
-<div class="section-label">
-    05 / text
-</div>
-
-
-<div class="text-lab">
-
-    <div class="text-lab-header">
-
-        <div>
-
-            <h2>
-                Text Lab
-            </h2>
-
-            <p>
-                Translation and text utilities.
+            <p style="color:var(--muted);font-size:.88rem;margin-top:8px;" data-i18n="translation_description">
+              This translates the interface only. Articles and scientific files remain unchanged.
             </p>
 
-        </div>
+            <textarea id="translateInput" data-placeholder="translate_placeholder"
+              placeholder="Write or paste a short text to translate..."></textarea>
 
-        <span>
-            79 LANGUAGES
-        </span>
-
-    </div>
-
-
-    <div class="translation-grid">
-
-        <div>
-
-            <textarea
-                id="translateInput"
-                placeholder="Paste text here...">
-            </textarea>
-
-        </div>
-
-
-        <div>
-
-            <div
-                id="translationOutput"
-                class="translation-output">
-
-                Translation will appear here.
-
+            <div class="language-row">
+              <select id="languageSelect"></select>
+              <button class="button primary" onclick="translateText()" data-i18n="translate_button">
+                Translate
+              </button>
             </div>
 
+            <div id="translationOutput" class="output">—</div>
+          </div>
+
         </div>
+      </div>
+    </section>
 
-    </div>
+    <section id="about">
+      <div class="container reveal">
+        <div class="section-head">
+          <div>
+            <div class="section-number">05 / <span data-i18n="about">about</span></div>
+            <h2 data-i18n="about_title">Why this exists.</h2>
+          </div>
 
+          <p class="section-description" data-i18n="about_text">
+            This is not intended to be a conventional portfolio. It is a small digital space for things I am learning, building, reading and thinking about.
+          </p>
+        </div>
+      </div>
+    </section>
 
-    <div class="translation-actions">
+  </main>
 
-        <select id="languageSelect">
+  <footer class="container">
+    <span>© 2026 AMIRYASIN HOSSEINI</span>
+    <span>curiosity / evidence / uncertainty</span>
+  </footer>
 
-            <option value="fa">Persian — فارسی</option>
-            <option value="en">English</option>
-            <option value="de">German — Deutsch</option>
-            <option value="fr">French — Français</option>
-            <option value="es">Spanish — Español</option>
-            <option value="it">Italian — Italiano</option>
-            <option value="pt">Portuguese</option>
-            <option value="ru">Russian</option>
-            <option value="ar">Arabic — العربية</option>
-            <option value="tr">Turkish</option>
-            <option value="ja">Japanese</option>
-            <option value="ko">Korean</option>
-            <option value="zh-CN">Chinese</option>
-            <option value="hi">Hindi</option>
-            <option value="nl">Dutch</option>
-            <option value="pl">Polish</option>
-            <option value="sv">Swedish</option>
-            <option value="uk">Ukrainian</option>
-            <option value="el">Greek</option>
-            <option value="he">Hebrew</option>
-            <option value="id">Indonesian</option>
-            <option value="vi">Vietnamese</option>
-            <option value="th">Thai</option>
+  <script>
+    const translations = {
+      en: {
+        nav_overview:"overview",
+        nav_research:"research",
+        nav_lab:"text lab",
+        nav_about:"about",
+        eyebrow:"PERSONAL KNOWLEDGE SPACE",
+        hero_text:"Student interested in understanding living systems — from molecules and genes to the brain, cognition and evolution.",
+        explore:"Explore the space",
+        open_lab:"Open text lab",
+        overview:"overview",
+        interests_title:"Interests",
+        overview_description:"A map of the questions, systems and disciplines I keep returning to.",
+        approach_title:"Approach",
+        approach_text:"Curious about how complex biological systems emerge from interactions between simpler components — and how those systems eventually produce cognition and behavior.",
+        projects_title:"Projects",
+        projects_text:"Experiments, small software projects, scientific notes, computational ideas and things worth building.",
+        notes_title:"Notes",
+        notes_text:"Short observations, concepts, questions and explanations collected while learning.",
+        now:"now",
+        focus_title:"Current Focus",
+        focus_heading:"Understanding the brain as a biological system.",
+        focus_text:"Exploring the relationship between genetics, cellular mechanisms, neural circuits, cognition and behavior.",
+        research:"research",
+        research_title:"Reading Material",
+        research_description:"Scientific articles and notes about evolutionary processes. These texts are intentionally excluded from automatic interface translation.",
+        lab:"intelligence & text",
+        lab_title:"Text Lab",
+        lab_description:"Small utilities for thinking, translating and working with scientific text.",
+        ai_title:"Ask a scientific question",
+        question_placeholder:"Ask something about biology, neuroscience, genetics or evolution...",
+        ask_button:"Ask",
+        ai_default:"The assistant will explain concepts clearly and distinguish established knowledge from uncertainty.",
+        translation_title:"Interface translation",
+        translation_description:"This translates the interface only. Articles and scientific files remain unchanged.",
+        translate_placeholder:"Write or paste a short text to translate...",
+        translate_button:"Translate",
+        about:"about",
+        about_title:"Why this exists.",
+        about_text:"This is not intended to be a conventional portfolio. It is a small digital space for things I am learning, building, reading and thinking about."
+      }
+    };
 
-        </select>
+    const languages = {
+      fa:"Persian", ar:"Arabic", de:"German", fr:"French", es:"Spanish",
+      it:"Italian", pt:"Portuguese", ru:"Russian", zh:"Chinese", ja:"Japanese",
+      ko:"Korean", hi:"Hindi", tr:"Turkish", nl:"Dutch", pl:"Polish",
+      uk:"Ukrainian", sv:"Swedish", no:"Norwegian", da:"Danish", fi:"Finnish",
+      el:"Greek", he:"Hebrew", id:"Indonesian", vi:"Vietnamese", th:"Thai",
+      cs:"Czech", ro:"Romanian", hu:"Hungarian", bg:"Bulgarian", sr:"Serbian",
+      sk:"Slovak", hr:"Croatian", sl:"Slovenian", ca:"Catalan", et:"Estonian",
+      lv:"Latvian", lt:"Lithuanian", ms:"Malay", sw:"Swahili", af:"Afrikaans",
+      sq:"Albanian", am:"Amharic", az:"Azerbaijani", eu:"Basque", bn:"Bengali",
+      bs:"Bosnian", ceb:"Cebuano", eo:"Esperanto", gl:"Galician", ka:"Georgian",
+      gu:"Gujarati", ha:"Hausa", is:"Icelandic", jv:"Javanese", kn:"Kannada",
+      kk:"Kazakh", km:"Khmer", ky:"Kyrgyz", lo:"Lao", mk:"Macedonian",
+      ml:"Malayalam", mn:"Mongolian", mr:"Marathi", my:"Burmese", ne:"Nepali",
+      pa:"Punjabi", si:"Sinhala", ta:"Tamil", te:"Telugu", uz:"Uzbek",
+      yo:"Yoruba", zu:"Zulu", tl:"Filipino", mt:"Maltese", fy:"Frisian",
+      la:"Latin", yi:"Yiddish", gd:"Scottish Gaelic", cy:"Welsh", ga:"Irish",
+      ku:"Kurdish"
+    };
 
+    const select = document.getElementById("languageSelect");
 
-        <button
-            class="translate-button"
-            onclick="translateText()">
+    Object.entries(languages).forEach(([code, name]) => {
+      const option = document.createElement("option");
+      option.value = code;
+      option.textContent = name;
+      select.appendChild(option);
+    });
 
-            Translate
+    function answerQuestion() {
+      const question = document.getElementById("question").value.trim();
+      const answer = document.getElementById("answer");
 
-        </button>
+      if (!question) {
+        answer.textContent = "Write a question first.";
+        return;
+      }
 
-    </div>
+      answer.textContent =
+        "This interface is ready for an AI endpoint. To activate real scientific answers, connect this function to your own backend API.\\n\\n" +
+        "Question received: " + question;
+    }
 
-</div>
-```
+    async function translateText() {
+      const text = document.getElementById("translateInput").value.trim();
+      const target = select.value;
+      const output = document.getElementById("translationOutput");
 
-</section>
+      if (!text) {
+        output.textContent = "Write something to translate first.";
+        return;
+      }
 
-<section class="section reveal" id="about">
+      output.textContent = "Translating...";
 
-```
-<div class="section-label">
-    06 / about
-</div>
+      try {
+        const url =
+          "https://api.mymemory.translated.net/get?q=" +
+          encodeURIComponent(text) +
+          "&langpair=en|" + target;
 
-<div class="about-card">
+        const response = await fetch(url);
+        const data = await response.json();
 
-    <div class="card-index">
-        ABOUT
-    </div>
+        output.textContent =
+          data.responseData?.translatedText ||
+          "Translation was not available.";
+      } catch (error) {
+        output.textContent =
+          "Translation service is unavailable right now.";
+      }
+    }
 
-    <h2 data-i18n="about_title">
-        Why this exists.
-    </h2>
+    function showArticle(title) {
+      alert(
+        title +
+        "\\n\\nThis article is currently represented as a research note. " +
+        "You can replace this action with a link to a PDF or a dedicated article page."
+      );
+    }
 
-    <p data-i18n="about_text">
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+        }
+      });
+    }, { threshold: .12 });
 
-        This is not intended to be a conventional portfolio.
-        It is a small digital space for things I am learning,
-        building, reading and thinking about.
+    document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
 
-    </p>
+    function applyInterfaceLanguage(lang) {
+      if (lang === "en") {
+        document.documentElement.lang = "en";
+        return;
+      }
 
-</div>
-```
+      document.documentElement.lang = lang;
 
-</section>
+      document.querySelectorAll("[data-i18n]").forEach(element => {
+        const original = element.textContent.trim();
 
-</main>
+        fetch(
+          "https://api.mymemory.translated.net/get?q=" +
+          encodeURIComponent(original) +
+          "&langpair=en|" + lang
+        )
+        .then(response => response.json())
+        .then(data => {
+          if (data.responseData?.translatedText) {
+            element.textContent = data.responseData.translatedText;
+          }
+        })
+        .catch(() => {});
+      });
 
-<footer class="container">
+      document.querySelectorAll("[data-placeholder]").forEach(element => {
+        const original = element.getAttribute("placeholder");
 
-```
-<span>
-    © 2026 AMIRYASIN HOSSEINI
-</span>
+        fetch(
+          "https://api.mymemory.translated.net/get?q=" +
+          encodeURIComponent(original) +
+          "&langpair=en|" + lang
+        )
+        .then(response => response.json())
+        .then(data => {
+          if (data.responseData?.translatedText) {
+            element.setAttribute("placeholder", data.responseData.translatedText);
+          }
+        })
+        .catch(() => {});
+      });
+    }
 
-<span>
-    built quietly.
-</span>
-```
-
-</footer>
-
-<!-- LANGUAGE MENU -->
-
-<div id="languageMenu" class="language-menu">
-
-```
-<div class="language-menu-inner">
-
-    <div class="language-menu-title">
-        SELECT LANGUAGE
-    </div>
-
-    <div class="language-grid" id="languageGrid"></div>
-
-</div>
-```
-
-</div>
-
-<!-- ARTICLE MODAL -->
-
-<div id="articleModal" class="modal">
-
-```
-<div class="modal-content">
-
-    <button
-        class="modal-close"
-        onclick="closeArticle()">
-        ×
-    </button>
-
-    <div id="articleContent"></div>
-
-</div>
-```
-
-</div>
-
-<!-- COMMAND PALETTE -->
-
-<div id="commandPalette" class="command-palette">
-
-```
-<div class="palette">
-
-    <input
-        id="paletteInput"
-        placeholder="Search or jump to..."
-    >
-
-    <button onclick="scrollToSection('lab')">
-        → Scientific AI
-    </button>
-
-    <button onclick="scrollToSection('lab-text')">
-        → Text Lab
-    </button>
-
-    <button onclick="scrollToSection('about')">
-        → About
-    </button>
-
-    <button onclick="scrollToTop()">
-        → Home
-    </button>
-
-    <small>
-        ESC to close
-    </small>
-
-</div>
-```
-
-</div>
-
-<script src="script.js"></script>
+    select.addEventListener("change", () => {
+      applyInterfaceLanguage(select.value);
+    });
+  </script>
 
 </body>
 </html>
