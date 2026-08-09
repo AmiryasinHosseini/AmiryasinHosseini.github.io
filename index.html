@@ -721,188 +721,236 @@
     <span>curiosity / evidence / uncertainty</span>
   </footer>
 
-  <script>
-    const translations = {
-      en: {
-        nav_overview:"overview",
-        nav_research:"research",
-        nav_lab:"text lab",
-        nav_about:"about",
-        eyebrow:"PERSONAL KNOWLEDGE SPACE",
-        hero_text:"Student interested in understanding living systems — from molecules and genes to the brain, cognition and evolution.",
-        explore:"Explore the space",
-        open_lab:"Open text lab",
-        overview:"overview",
-        interests_title:"Interests",
-        overview_description:"A map of the questions, systems and disciplines I keep returning to.",
-        approach_title:"Approach",
-        approach_text:"Curious about how complex biological systems emerge from interactions between simpler components — and how those systems eventually produce cognition and behavior.",
-        projects_title:"Projects",
-        projects_text:"Experiments, small software projects, scientific notes, computational ideas and things worth building.",
-        notes_title:"Notes",
-        notes_text:"Short observations, concepts, questions and explanations collected while learning.",
-        now:"now",
-        focus_title:"Current Focus",
-        focus_heading:"Understanding the brain as a biological system.",
-        focus_text:"Exploring the relationship between genetics, cellular mechanisms, neural circuits, cognition and behavior.",
-        research:"research",
-        research_title:"Reading Material",
-        research_description:"Scientific articles and notes about evolutionary processes. These texts are intentionally excluded from automatic interface translation.",
-        lab:"intelligence & text",
-        lab_title:"Text Lab",
-        lab_description:"Small utilities for thinking, translating and working with scientific text.",
-        ai_title:"Ask a scientific question",
-        question_placeholder:"Ask something about biology, neuroscience, genetics or evolution...",
-        ask_button:"Ask",
-        ai_default:"The assistant will explain concepts clearly and distinguish established knowledge from uncertainty.",
-        translation_title:"Interface translation",
-        translation_description:"This translates the interface only. Articles and scientific files remain unchanged.",
-        translate_placeholder:"Write or paste a short text to translate...",
-        translate_button:"Translate",
-        about:"about",
-        about_title:"Why this exists.",
-        about_text:"This is not intended to be a conventional portfolio. It is a small digital space for things I am learning, building, reading and thinking about."
-      }
-    };
-
-    const languages = {
-      fa:"Persian", ar:"Arabic", de:"German", fr:"French", es:"Spanish",
-      it:"Italian", pt:"Portuguese", ru:"Russian", zh:"Chinese", ja:"Japanese",
-      ko:"Korean", hi:"Hindi", tr:"Turkish", nl:"Dutch", pl:"Polish",
-      uk:"Ukrainian", sv:"Swedish", no:"Norwegian", da:"Danish", fi:"Finnish",
-      el:"Greek", he:"Hebrew", id:"Indonesian", vi:"Vietnamese", th:"Thai",
-      cs:"Czech", ro:"Romanian", hu:"Hungarian", bg:"Bulgarian", sr:"Serbian",
-      sk:"Slovak", hr:"Croatian", sl:"Slovenian", ca:"Catalan", et:"Estonian",
-      lv:"Latvian", lt:"Lithuanian", ms:"Malay", sw:"Swahili", af:"Afrikaans",
-      sq:"Albanian", am:"Amharic", az:"Azerbaijani", eu:"Basque", bn:"Bengali",
-      bs:"Bosnian", ceb:"Cebuano", eo:"Esperanto", gl:"Galician", ka:"Georgian",
-      gu:"Gujarati", ha:"Hausa", is:"Icelandic", jv:"Javanese", kn:"Kannada",
-      kk:"Kazakh", km:"Khmer", ky:"Kyrgyz", lo:"Lao", mk:"Macedonian",
-      ml:"Malayalam", mn:"Mongolian", mr:"Marathi", my:"Burmese", ne:"Nepali",
-      pa:"Punjabi", si:"Sinhala", ta:"Tamil", te:"Telugu", uz:"Uzbek",
-      yo:"Yoruba", zu:"Zulu", tl:"Filipino", mt:"Maltese", fy:"Frisian",
-      la:"Latin", yi:"Yiddish", gd:"Scottish Gaelic", cy:"Welsh", ga:"Irish",
-      ku:"Kurdish"
-    };
-
-    const select = document.getElementById("languageSelect");
-
-    Object.entries(languages).forEach(([code, name]) => {
-      const option = document.createElement("option");
-      option.value = code;
-      option.textContent = name;
-      select.appendChild(option);
-    });
-
-    function answerQuestion() {
-      const question = document.getElementById("question").value.trim();
-      const answer = document.getElementById("answer");
-
-      if (!question) {
-        answer.textContent = "Write a question first.";
-        return;
-      }
-
-      answer.textContent =
-        "This interface is ready for an AI endpoint. To activate real scientific answers, connect this function to your own backend API.\\n\\n" +
-        "Question received: " + question;
+<script>
+  const translations = {
+    en: {
+      brand: "AY / KNOWLEDGE SPACE",
+      nav_overview: "overview",
+      nav_research: "research",
+      nav_lab: "text lab",
+      nav_about: "about",
+      eyebrow: "PERSONAL KNOWLEDGE SPACE",
+      hero_text: "Student interested in understanding living systems — from molecules and genes to the brain, cognition and evolution.",
+      explore: "Explore the space",
+      open_lab: "Open text lab",
+      overview: "overview",
+      interests_title: "Interests",
+      overview_description: "A map of the questions, systems and disciplines I keep returning to.",
+      approach_title: "Approach",
+      approach_text: "Curious about how complex biological systems emerge from interactions between simpler components — and how those systems eventually produce cognition and behavior.",
+      projects_title: "Projects",
+      projects_text: "Experiments, small software projects, scientific notes, computational ideas and things worth building.",
+      notes_title: "Notes",
+      notes_text: "Short observations, concepts, questions and explanations collected while learning.",
+      now: "now",
+      focus_title: "Current Focus",
+      focus_heading: "Understanding the brain as a biological system.",
+      focus_text: "Exploring the relationship between genetics, cellular mechanisms, neural circuits, cognition and behavior.",
+      research: "research",
+      research_title: "Reading Material",
+      research_description: "Scientific articles and notes about evolutionary processes. These texts are intentionally excluded from automatic interface translation.",
+      lab: "intelligence & text",
+      lab_title: "Text Lab",
+      lab_description: "Small utilities for thinking, translating and working with scientific text.",
+      ai_title: "Ask a scientific question",
+      question_placeholder: "Ask something about biology, neuroscience, genetics or evolution...",
+      ask_button: "Ask",
+      ai_default: "The assistant will explain concepts clearly and distinguish established knowledge from uncertainty.",
+      translation_title: "Interface translation",
+      translation_description: "This translates the interface only. Articles and scientific files remain unchanged.",
+      translate_placeholder: "Write or paste a short text to translate...",
+      translate_button: "Translate",
+      about: "about",
+      about_title: "Why this exists.",
+      about_text: "This is not intended to be a conventional portfolio. It is a small digital space for things I am learning, building, reading and thinking about.",
+      footer_motto: "curiosity / evidence / uncertainty"
+    },
+    fa: {
+      brand: "AY / فضای دانش",
+      nav_overview: "نمای کلی",
+      nav_research: "پژوهش",
+      nav_lab: "آزمایشگاه متن",
+      nav_about: "درباره",
+      eyebrow: "فضای دانش شخصی",
+      hero_text: "دانش‌آموزی که به درک سیستم‌های زنده علاقه دارد — از مولکول‌ها و ژن‌ها تا مغز، شناخت و تکامل.",
+      explore: "کاوش در فضا",
+      open_lab: "باز کردن آزمایشگاه متن",
+      overview: "نمای کلی",
+      interests_title: "علایق",
+      overview_description: "نقشه‌ای از پرسش‌ها، سیستم‌ها و رشته‌هایی که مدام به آن‌ها برمی‌گردم.",
+      approach_title: "رویکرد",
+      approach_text: "کنجکاو دربارهٔ اینکه چگونه سیستم‌های زیستی پیچیده از تعامل اجزای ساده‌تر پدید می‌آیند — و چگونه این سیستم‌ها در نهایت شناخت و رفتار را تولید می‌کنند.",
+      projects_title: "پروژه‌ها",
+      projects_text: "آزمایش‌ها، پروژه‌های نرم‌افزاری کوچک، یادداشت‌های علمی، ایده‌های محاسباتی و چیزهایی که ارزش ساختن دارند.",
+      notes_title: "یادداشت‌ها",
+      notes_text: "مشاهدات کوتاه، مفاهیم، پرسش‌ها و توضیحاتی که هنگام یادگیری جمع می‌کنم.",
+      now: "اکنون",
+      focus_title: "تمرکز کنونی",
+      focus_heading: "درک مغز به‌عنوان یک سیستم زیستی.",
+      focus_text: "کاوش در رابطه میان ژنتیک، مکانیسم‌های سلولی، مدارهای عصبی، شناخت و رفتار.",
+      research: "پژوهش",
+      research_title: "مطالب خواندنی",
+      research_description: "مقاله‌ها و یادداشت‌های علمی دربارهٔ فرآیندهای تکاملی. این متن‌ها عمداً از ترجمهٔ خودکار رابط کاربری مستثنی شده‌اند.",
+      lab: "هوش و متن",
+      lab_title: "آزمایشگاه متن",
+      lab_description: "ابزارهای کوچک برای تفکر، ترجمه و کار با متن علمی.",
+      ai_title: "یک پرسش علمی بپرس",
+      question_placeholder: "دربارهٔ زیست‌شناسی، علوم اعصاب، ژنتیک یا تکامل بپرس...",
+      ask_button: "بپرس",
+      ai_default: "دستیار مفاهیم را واضح توضیح می‌دهد و دانش ثابت‌شده را از عدم‌قطعیت متمایز می‌کند.",
+      translation_title: "ترجمهٔ رابط کاربری",
+      translation_description: "این بخش فقط رابط کاربری را ترجمه می‌کند. مقاله‌ها و فایل‌های علمی بدون تغییر می‌مانند.",
+      translate_placeholder: "یک متن کوتاه برای ترجمه بنویس یا جای‌گذاری کن...",
+      translate_button: "ترجمه کن",
+      about: "درباره",
+      about_title: "چرا اینجا وجود دارد.",
+      about_text: "این قرار نیست یک پورتفولیوی معمولی باشد. این یک فضای دیجیتال کوچک است برای چیزهایی که یاد می‌گیرم، می‌سازم، می‌خوانم و به آن‌ها فکر می‌کنم.",
+      footer_motto: "کنجکاوی / شواهد / عدم‌قطعیت"
     }
+  };
 
-    async function translateText() {
-      const text = document.getElementById("translateInput").value.trim();
-      const target = select.value;
-      const output = document.getElementById("translationOutput");
-
-      if (!text) {
-        output.textContent = "Write something to translate first.";
-        return;
-      }
-
-      output.textContent = "Translating...";
-
-      try {
-        const url =
-          "https://api.mymemory.translated.net/get?q=" +
-          encodeURIComponent(text) +
-          "&langpair=en|" + target;
-
-        const response = await fetch(url);
-        const data = await response.json();
-
-        output.textContent =
-          data.responseData?.translatedText ||
-          "Translation was not available.";
-      } catch (error) {
-        output.textContent =
-          "Translation service is unavailable right now.";
-      }
+  const messages = {
+    en: {
+      writeQuestionFirst: "Write a question first.",
+      questionReceived: "Question received: ",
+      aiEndpointNotice: "This interface is ready for an AI endpoint. To activate real scientific answers, connect this function to your own backend API.\n\n",
+      writeTextFirst: "Write something to translate first.",
+      translating: "Translating...",
+      translationUnavailable: "Translation was not available.",
+      serviceUnavailable: "Translation service is unavailable right now.",
+      articleNote: "\n\nThis article is currently represented as a research note. You can replace this action with a link to a PDF or a dedicated article page."
+    },
+    fa: {
+      writeQuestionFirst: "اول یک پرسش بنویس.",
+      questionReceived: "پرسش دریافت شد: ",
+      aiEndpointNotice: "این رابط برای اتصال به موتور هوش مصنوعی آماده است. برای فعال‌کردن پاسخ‌های علمی واقعی، این تابع را به بک‌اند خودت وصل کن.\n\n",
+      writeTextFirst: "اول متنی برای ترجمه بنویس.",
+      translating: "در حال ترجمه...",
+      translationUnavailable: "ترجمه در دسترس نبود.",
+      serviceUnavailable: "سرویس ترجمه الان در دسترس نیست.",
+      articleNote: "\n\nاین مقاله فعلاً به‌صورت یادداشت پژوهشی نمایش داده می‌شود. می‌توانی این اکشن را با لینک PDF یا صفحهٔ مقالهٔ اختصاصی جایگزین کنی."
     }
+  };
 
-    function showArticle(title) {
-      alert(
-        title +
-        "\\n\\nThis article is currently represented as a research note. " +
-        "You can replace this action with a link to a PDF or a dedicated article page."
-      );
-    }
+  let currentLang = "en";
+  const msg = key => messages[currentLang]?.[key] ?? messages.en[key] ?? key;
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-        }
+  const languages = {
+    fa:"Persian", ar:"Arabic", de:"German", fr:"French", es:"Spanish",
+    it:"Italian", pt:"Portuguese", ru:"Russian", zh:"Chinese", ja:"Japanese",
+    ko:"Korean", hi:"Hindi", tr:"Turkish", nl:"Dutch", pl:"Polish",
+    uk:"Ukrainian", sv:"Swedish", no:"Norwegian", da:"Danish", fi:"Finnish",
+    el:"Greek", he:"Hebrew", id:"Indonesian", vi:"Vietnamese", th:"Thai",
+    cs:"Czech", ro:"Romanian", hu:"Hungarian", bg:"Bulgarian", sr:"Serbian",
+    sk:"Slovak", hr:"Croatian", sl:"Slovenian", ca:"Catalan", et:"Estonian",
+    lv:"Latvian", lt:"Lithuanian", ms:"Malay", sw:"Swahili", af:"Afrikaans",
+    sq:"Albanian", am:"Amharic", az:"Azerbaijani", eu:"Basque", bn:"Bengali",
+    bs:"Bosnian", ceb:"Cebuano", eo:"Esperanto", gl:"Galician", ka:"Georgian",
+    gu:"Gujarati", ha:"Hausa", is:"Icelandic", jv:"Javanese", kn:"Kannada",
+    kk:"Kazakh", km:"Khmer", ky:"Kyrgyz", lo:"Lao", mk:"Macedonian",
+    ml:"Malayalam", mn:"Mongolian", mr:"Marathi", my:"Burmese", ne:"Nepali",
+    pa:"Punjabi", si:"Sinhala", ta:"Tamil", te:"Telugu", uz:"Uzbek",
+    yo:"Yoruba", zu:"Zulu", tl:"Filipino", mt:"Maltese", fy:"Frisian",
+    la:"Latin", yi:"Yiddish", gd:"Scottish Gaelic", cy:"Welsh", ga:"Irish",
+    ku:"Kurdish"
+  };
+
+  const select = document.getElementById("languageSelect");
+
+  Object.entries(languages).forEach(([code, name]) => {
+    const option = document.createElement("option");
+    option.value = code;
+    option.textContent = name;
+    select.appendChild(option);
+  });
+
+  function setDirection(lang) {
+    document.documentElement.dir = ["fa", "ar", "he", "ur", "yi"].includes(lang) ? "rtl" : "ltr";
+  }
+
+  function applyInterfaceLanguage(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    setDirection(lang);
+
+    // زبان‌هایی که ترجمه‌شون داخل خود کده (فارسی و انگلیسی) → بدون API، فوری
+    if (translations[lang]) {
+      const t = translations[lang];
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (t[key]) el.textContent = t[key];
       });
-    }, { threshold: .12 });
+      document.querySelectorAll("[data-placeholder]").forEach(el => {
+        const key = el.getAttribute("data-placeholder");
+        if (t[key]) el.setAttribute("placeholder", t[key]);
+      });
+      return;
+    }
 
-    document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
-
-    function applyInterfaceLanguage(lang) {
-      if (lang === "en") {
-        document.documentElement.lang = "en";
-        return;
-      }
-
-      document.documentElement.lang = lang;
-
-      document.querySelectorAll("[data-i18n]").forEach(element => {
-        const original = element.textContent.trim();
-
-        fetch(
-          "https://api.mymemory.translated.net/get?q=" +
-          encodeURIComponent(original) +
-          "&langpair=en|" + lang
-        )
-        .then(response => response.json())
-        .then(data => {
-          if (data.responseData?.translatedText) {
-            element.textContent = data.responseData.translatedText;
-          }
-        })
+    // بقیهٔ زبان‌ها → از طریق API
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+      const key = el.getAttribute("data-i18n");
+      const english = translations.en[key];
+      if (!english) return;
+      fetch("https://api.mymemory.translated.net/get?q=" + encodeURIComponent(english) + "&langpair=en|" + lang)
+        .then(r => r.json())
+        .then(d => { if (d.responseData?.translatedText) el.textContent = d.responseData.translatedText; })
         .catch(() => {});
-      });
-
-      document.querySelectorAll("[data-placeholder]").forEach(element => {
-        const original = element.getAttribute("placeholder");
-
-        fetch(
-          "https://api.mymemory.translated.net/get?q=" +
-          encodeURIComponent(original) +
-          "&langpair=en|" + lang
-        )
-        .then(response => response.json())
-        .then(data => {
-          if (data.responseData?.translatedText) {
-            element.setAttribute("placeholder", data.responseData.translatedText);
-          }
-        })
-        .catch(() => {});
-      });
-    }
-
-    select.addEventListener("change", () => {
-      applyInterfaceLanguage(select.value);
     });
-  </script>
+    document.querySelectorAll("[data-placeholder]").forEach(el => {
+      const key = el.getAttribute("data-placeholder");
+      const english = translations.en[key];
+      if (!english) return;
+      fetch("https://api.mymemory.translated.net/get?q=" + encodeURIComponent(english) + "&langpair=en|" + lang)
+        .then(r => r.json())
+        .then(d => { if (d.responseData?.translatedText) el.setAttribute("placeholder", d.responseData.translatedText); })
+        .catch(() => {});
+    });
+  }
+
+  function answerQuestion() {
+    const question = document.getElementById("question").value.trim();
+    const answer = document.getElementById("answer");
+    if (!question) { answer.textContent = msg("writeQuestionFirst"); return; }
+    answer.textContent = msg("aiEndpointNotice") + msg("questionReceived") + question;
+  }
+
+  async function translateText() {
+    const text = document.getElementById("translateInput").value.trim();
+    const target = select.value;
+    const output = document.getElementById("translationOutput");
+    if (!text) { output.textContent = msg("writeTextFirst"); return; }
+    output.textContent = msg("translating");
+    try {
+      const url = "https://api.mymemory.translated.net/get?q=" + encodeURIComponent(text) + "&langpair=en|" + target;
+      const response = await fetch(url);
+      const data = await response.json();
+      output.textContent = data.responseData?.translatedText || msg("translationUnavailable");
+    } catch {
+      output.textContent = msg("serviceUnavailable");
+    }
+  }
+
+  function showArticle(title) {
+    alert(title + msg("articleNote"));
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add("visible"); });
+  }, { threshold: .12 });
+  document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+
+  // پیش‌فرض: فارسی — و انتخاب کاربر ذخیره می‌شه
+  const savedLang = localStorage.getItem("siteLang") || "en";
+  select.value = savedLang;
+  applyInterfaceLanguage(savedLang);
+
+  select.addEventListener("change", () => {
+    applyInterfaceLanguage(select.value);
+    localStorage.setItem("siteLang", select.value);
+  });
+</script>
+
 
 </body>
 </html>
