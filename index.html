@@ -4,656 +4,227 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Amiryasin Hosseini — personal knowledge space">
+
 <title>Amiryasin Hosseini</title>
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+<meta name="description"
+content="Amiryasin Hosseini — personal knowledge space">
 
-:root {
-    --bg: #090909;
-    --surface: #101010;
-    --surface-2: #151515;
-    --border: #252525;
-    --text: #e8e8e8;
-    --muted: #858585;
-    --dim: #555;
-    --accent: #b7ff4a;
-    --accent-soft: rgba(183,255,74,.08);
-    --danger: #ff6868;
-}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: Inter, sans-serif;
-    line-height: 1.6;
-    min-height: 100vh;
-}
-
-body::selection {
-    background: var(--accent);
-    color: #000;
-}
-
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
-button,
-textarea,
-input {
-    font: inherit;
-}
-
-button {
-    cursor: pointer;
-}
-
-/* ---------- Layout ---------- */
-
-.container {
-    width: min(1100px, calc(100% - 40px));
-    margin: auto;
-}
-
-nav {
-    height: 76px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid var(--border);
-}
-
-.logo {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 14px;
-    letter-spacing: -.4px;
-}
-
-.logo span {
-    color: var(--muted);
-}
-
-.nav-right {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-}
-
-.nav-link {
-    color: var(--muted);
-    font-size: 13px;
-    transition: .2s;
-}
-
-.nav-link:hover {
-    color: var(--text);
-}
-
-.status {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    color: var(--muted);
-    font-size: 12px;
-}
-
-.status-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 10px rgba(183,255,74,.45);
-}
-
-/* ---------- Hero ---------- */
-
-.hero {
-    padding: 105px 0 85px;
-    max-width: 850px;
-}
-
-.eyebrow {
-    color: var(--muted);
-    font-family: "JetBrains Mono", monospace;
-    font-size: 12px;
-    margin-bottom: 20px;
-}
-
-.hero h1 {
-    font-size: clamp(42px, 7vw, 78px);
-    line-height: .98;
-    letter-spacing: -4px;
-    font-weight: 600;
-    margin-bottom: 28px;
-}
-
-.hero h1 span {
-    color: var(--muted);
-}
-
-.hero-description {
-    max-width: 650px;
-    color: #999;
-    font-size: 17px;
-    line-height: 1.8;
-}
-
-.hero-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 30px;
-}
-
-.tag {
-    border: 1px solid var(--border);
-    color: var(--muted);
-    padding: 7px 11px;
-    border-radius: 5px;
-    font-family: "JetBrains Mono", monospace;
-    font-size: 11px;
-    transition: .2s;
-}
-
-.tag:hover {
-    border-color: #444;
-    color: var(--text);
-}
-
-/* ---------- Grid ---------- */
-
-.section {
-    padding: 25px 0 80px;
-}
-
-.section-label {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 11px;
-    color: var(--dim);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 14px;
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-}
-
-.card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 9px;
-    padding: 25px;
-    min-height: 210px;
-    transition: border-color .25s, transform .25s, background .25s;
-}
-
-.card:hover {
-    border-color: #363636;
-    background: var(--surface-2);
-    transform: translateY(-2px);
-}
-
-.card-number {
-    color: var(--dim);
-    font-family: "JetBrains Mono", monospace;
-    font-size: 11px;
-    margin-bottom: 35px;
-}
-
-.card h2 {
-    font-size: 17px;
-    font-weight: 500;
-    margin-bottom: 12px;
-}
-
-.card p {
-    color: var(--muted);
-    font-size: 13px;
-    line-height: 1.8;
-}
-
-.interest-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
-}
-
-.interest {
-    font-size: 12px;
-    color: #aaa;
-    border: 1px solid var(--border);
-    padding: 7px 9px;
-    border-radius: 4px;
-}
-
-/* ---------- Now ---------- */
-
-.now {
-    border: 1px solid var(--border);
-    background: var(--surface);
-    border-radius: 9px;
-    padding: 25px;
-    display: grid;
-    grid-template-columns: 140px 1fr;
-    gap: 30px;
-}
-
-.now-label {
-    color: var(--accent);
-    font-family: "JetBrains Mono", monospace;
-    font-size: 11px;
-}
-
-.now-content h3 {
-    font-size: 16px;
-    font-weight: 500;
-    margin-bottom: 8px;
-}
-
-.now-content p {
-    color: var(--muted);
-    font-size: 13px;
-}
-
-/* ---------- Text Lab ---------- */
-
-.lab {
-    border: 1px solid var(--border);
-    background: var(--surface);
-    border-radius: 9px;
-    overflow: hidden;
-}
-
-.lab-top {
-    padding: 22px 25px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.lab-title {
-    font-size: 15px;
-    font-weight: 500;
-}
-
-.lab-subtitle {
-    color: var(--dim);
-    font-size: 11px;
-    font-family: "JetBrains Mono", monospace;
-}
-
-.lab-body {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-}
-
-.lab-panel {
-    padding: 20px;
-}
-
-.lab-panel + .lab-panel {
-    border-left: 1px solid var(--border);
-}
-
-textarea {
-    width: 100%;
-    height: 220px;
-    resize: vertical;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    background: #0b0b0b;
-    color: var(--text);
-    padding: 15px;
-    outline: none;
-    line-height: 1.7;
-    font-size: 13px;
-}
-
-textarea:focus {
-    border-color: #444;
-}
-
-textarea::placeholder {
-    color: #444;
-}
-
-.actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
-    margin-top: 10px;
-}
-
-.action {
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    padding: 8px 11px;
-    border-radius: 5px;
-    font-size: 11px;
-    transition: .2s;
-}
-
-.action:hover {
-    border-color: #555;
-    color: var(--text);
-}
-
-.action.primary {
-    background: var(--accent);
-    color: #000;
-    border-color: var(--accent);
-}
-
-.action.primary:hover {
-    opacity: .85;
-}
-
-.output {
-    height: 220px;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 15px;
-    color: #aaa;
-    font-size: 13px;
-    line-height: 1.8;
-    overflow-y: auto;
-    white-space: pre-wrap;
-    background: #0b0b0b;
-}
-
-.output.empty {
-    color: #444;
-}
-
-/* ---------- Reading ---------- */
-
-.reading {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.reading-item {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    padding: 15px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    border-radius: 6px;
-}
-
-.reading-item span:first-child {
-    color: #bbb;
-    font-size: 13px;
-}
-
-.reading-type {
-    color: var(--dim);
-    font-family: "JetBrains Mono", monospace;
-    font-size: 10px;
-}
-
-/* ---------- Footer ---------- */
-
-footer {
-    border-top: 1px solid var(--border);
-    padding: 30px 0 45px;
-    color: var(--dim);
-    font-family: "JetBrains Mono", monospace;
-    font-size: 10px;
-    display: flex;
-    justify-content: space-between;
-}
-
-/* ---------- Command Palette ---------- */
-
-.palette-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,.72);
-    backdrop-filter: blur(7px);
-    display: none;
-    align-items: flex-start;
-    justify-content: center;
-    padding-top: 15vh;
-    z-index: 100;
-}
-
-.palette-backdrop.open {
-    display: flex;
-}
-
-.palette {
-    width: min(600px, calc(100% - 30px));
-    background: #111;
-    border: 1px solid #333;
-    border-radius: 9px;
-    overflow: hidden;
-    box-shadow: 0 30px 100px rgba(0,0,0,.6);
-}
-
-.palette-input {
-    width: 100%;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid var(--border);
-    padding: 18px;
-    color: white;
-    outline: none;
-    font-size: 14px;
-}
-
-.palette-items {
-    padding: 8px;
-}
-
-.palette-item {
-    width: 100%;
-    background: transparent;
-    border: none;
-    color: #aaa;
-    padding: 12px;
-    text-align: left;
-    border-radius: 5px;
-    font-size: 13px;
-}
-
-.palette-item:hover {
-    background: var(--accent-soft);
-    color: var(--text);
-}
-
-.palette-hint {
-    padding: 10px 15px;
-    color: #444;
-    font-size: 10px;
-    border-top: 1px solid var(--border);
-    font-family: "JetBrains Mono", monospace;
-}
-
-/* ---------- Mobile ---------- */
-
-@media (max-width: 720px) {
-
-    .container {
-        width: min(100% - 28px, 1100px);
-    }
-
-    nav {
-        height: 65px;
-    }
-
-    .nav-link {
-        display: none;
-    }
-
-    .hero {
-        padding: 75px 0 60px;
-    }
-
-    .hero h1 {
-        letter-spacing: -2px;
-    }
-
-    .grid {
-        grid-template-columns: 1fr;
-    }
-
-    .now {
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }
-
-    .lab-body {
-        grid-template-columns: 1fr;
-    }
-
-    .lab-panel + .lab-panel {
-        border-left: none;
-        border-top: 1px solid var(--border);
-    }
-
-    footer {
-        flex-direction: column;
-        gap: 8px;
-    }
-}
-</style>
-
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="container">
+<div class="noise"></div>
 
-<nav>
-    <div class="logo">
-        amiryasin<span>.hosseini</span>
-    </div>
+<header class="header">
 
 ```
-<div class="nav-right">
-    <a href="#lab" class="nav-link">Text Lab</a>
-    <a href="#about" class="nav-link">About</a>
+<div class="container nav">
 
-    <div class="status">
-        <span class="status-dot"></span>
-        online
+    <a href="#" class="logo">
+        amiryasin<span>.hosseini</span>
+    </a>
+
+    <div class="nav-actions">
+
+        <button class="language-button" id="languageButton">
+            <span>EN</span>
+            <span class="arrow">⌄</span>
+        </button>
+
+        <button class="command-button" id="commandButton">
+            <span>⌘</span>
+            <span>K</span>
+        </button>
+
+        <a href="#about" class="nav-link" data-i18n="about">
+            About
+        </a>
+
     </div>
+
 </div>
 ```
 
-</nav>
+</header>
 
-<main>
+<main class="container">
 
-<section class="hero">
-    <div class="eyebrow">PERSONAL KNOWLEDGE SPACE / 2026</div>
+<section class="hero reveal">
 
 ```
+<div class="eyebrow">
+    <span class="status-dot"></span>
+    <span data-i18n="personal_space">
+        PERSONAL KNOWLEDGE SPACE
+    </span>
+</div>
+
 <h1>
     Amiryasin<br>
     <span>Hosseini.</span>
 </h1>
 
-<p class="hero-description">
+<p class="hero-description"
+   data-i18n="hero_description">
+
     Student interested in understanding living systems —
-    from molecules and genes to the brain, cognition, and evolution.
+    from molecules and genes to the brain, cognition and evolution.
+
 </p>
 
-<div class="hero-meta">
-    <span class="tag">neuroscience</span>
-    <span class="tag">genetics</span>
-    <span class="tag">molecular biology</span>
-    <span class="tag">evolution</span>
-    <span class="tag">cognitive science</span>
-    <span class="tag">bioinformatics</span>
+<div class="tags">
+
+    <span>neuroscience</span>
+    <span>genetics</span>
+    <span>molecular biology</span>
+    <span>evolution</span>
+    <span>cognitive science</span>
+    <span>bioinformatics</span>
+
 </div>
 ```
 
 </section>
 
-<section class="section">
+<section class="section reveal">
 
 ```
-<div class="section-label">01 / overview</div>
+<div class="section-label">
+    01 / overview
+</div>
+
 
 <div class="grid">
 
-    <div class="card">
-        <div class="card-number">01</div>
 
-        <h2>Interests</h2>
+    <article class="card">
+
+        <div class="card-index">01</div>
+
+        <h2 data-i18n="interests">
+            Interests
+        </h2>
 
         <div class="interest-list">
-            <span class="interest">Neuroscience</span>
-            <span class="interest">Genetics</span>
-            <span class="interest">Genomics</span>
-            <span class="interest">Molecular Biology</span>
-            <span class="interest">Cell Biology</span>
-            <span class="interest">Evolution</span>
-            <span class="interest">Cognitive Science</span>
-            <span class="interest">Neurobiology</span>
-            <span class="interest">Bioinformatics</span>
+
+            <span>Neuroscience</span>
+            <span>Genetics</span>
+            <span>Genomics</span>
+            <span>Molecular Biology</span>
+            <span>Cell Biology</span>
+            <span>Evolution</span>
+            <span>Cognitive Science</span>
+            <span>Neurobiology</span>
+            <span>Bioinformatics</span>
+
         </div>
-    </div>
+
+    </article>
 
 
-    <div class="card">
-        <div class="card-number">02</div>
 
-        <h2>Approach</h2>
+    <article class="card">
 
-        <p>
-            Curious about how complex biological systems emerge from
-            interactions between simpler components — and how those
-            systems eventually produce cognition and behavior.
+        <div class="card-index">02</div>
+
+        <h2 data-i18n="approach">
+            Approach
+        </h2>
+
+        <p data-i18n="approach_text">
+
+            Curious about how complex biological systems emerge
+            from interactions between simpler components — and how
+            those systems eventually produce cognition and behavior.
+
         </p>
-    </div>
+
+    </article>
 
 
-    <div class="card">
-        <div class="card-number">03</div>
 
-        <h2>Projects</h2>
+    <article class="card">
 
-        <p>
-            A place for experiments, small software projects,
-            scientific notes, computational ideas and things
-            worth building.
+        <div class="card-index">03</div>
+
+        <h2 data-i18n="projects">
+            Projects
+        </h2>
+
+        <p data-i18n="projects_text">
+
+            Experiments, small software projects, scientific notes,
+            computational ideas and things worth building.
+
         </p>
-    </div>
+
+    </article>
 
 
-    <div class="card">
-        <div class="card-number">04</div>
 
-        <h2>Notes</h2>
+    <article class="card">
 
-        <p>
+        <div class="card-index">04</div>
+
+        <h2 data-i18n="notes">
+            Notes
+        </h2>
+
+        <p data-i18n="notes_text">
+
             Short observations, concepts, questions and explanations
-            collected while learning. No polished performance —
-            just useful things worth keeping.
+            collected while learning.
+
         </p>
+
+    </article>
+
+
+</div>
+```
+
+</section>
+
+<section class="section reveal">
+
+```
+<div class="section-label">
+    02 / now
+</div>
+
+<div class="now-card">
+
+    <div class="now-title">
+
+        <span class="accent-line"></span>
+
+        <span data-i18n="current_focus">
+            CURRENT FOCUS
+        </span>
+
+    </div>
+
+    <div>
+
+        <h2 data-i18n="brain_title">
+            Understanding the brain as a biological system.
+        </h2>
+
+        <p data-i18n="brain_text">
+
+            Exploring the relationship between genetics,
+            cellular mechanisms, neural circuits, cognition
+            and behavior.
+
+        </p>
+
     </div>
 
 </div>
@@ -661,105 +232,328 @@ footer {
 
 </section>
 
-<section class="section">
+<section class="section reveal">
 
 ```
-<div class="section-label">02 / now</div>
+<div class="section-label">
+    03 / research
+</div>
 
-<div class="now">
+<div class="articles-header">
 
-    <div class="now-label">
-        CURRENT<br>
-        FOCUS
+    <div>
+
+        <h2 data-i18n="evolution">
+            Evolution
+        </h2>
+
+        <p data-i18n="evolution_subtitle">
+            A small collection of notes and reading material.
+        </p>
+
     </div>
 
-    <div class="now-content">
+    <span class="file-count">
+        03 FILES
+    </span>
 
-        <h3>Understanding the brain as a biological system.</h3>
+</div>
+
+
+<div class="article-grid">
+
+
+    <article class="article-card">
+
+        <div class="article-top">
+            <span>01</span>
+            <span>PDF / NOTE</span>
+        </div>
+
+        <h3>
+            Natural Selection
+        </h3>
 
         <p>
-            Exploring the relationship between genetics, cellular
-            mechanisms, neural circuits, cognition and behavior.
+            How variation, heritability and differential
+            reproductive success produce evolutionary change.
         </p>
 
-    </div>
+        <button
+            class="article-button"
+            onclick="openArticle('selection')">
+
+            Read article →
+
+        </button>
+
+    </article>
+
+
+
+    <article class="article-card">
+
+        <div class="article-top">
+            <span>02</span>
+            <span>PDF / NOTE</span>
+        </div>
+
+        <h3>
+            Genetic Drift
+        </h3>
+
+        <p>
+            Why random sampling can change allele frequencies,
+            especially in small populations.
+        </p>
+
+        <button
+            class="article-button"
+            onclick="openArticle('drift')">
+
+            Read article →
+
+        </button>
+
+    </article>
+
+
+
+    <article class="article-card">
+
+        <div class="article-top">
+            <span>03</span>
+            <span>PDF / NOTE</span>
+        </div>
+
+        <h3>
+            Evolution &amp; Genetics
+        </h3>
+
+        <p>
+            A compact introduction to the connection between
+            genetic variation and evolutionary processes.
+        </p>
+
+        <button
+            class="article-button"
+            onclick="openArticle('genetics')">
+
+            Read article →
+
+        </button>
+
+    </article>
+
 
 </div>
 ```
 
 </section>
 
-<section class="section" id="lab">
+<section class="section reveal" id="lab">
 
 ```
-<div class="section-label">03 / utility</div>
+<div class="section-label">
+    04 / intelligence
+</div>
 
-<div class="lab">
 
-    <div class="lab-top">
+<div class="ai-card">
+
+    <div class="ai-header">
 
         <div>
-            <div class="lab-title">Text Lab</div>
-            <div class="lab-subtitle">
-                small tools for working with text
+
+            <div class="ai-title">
+
+                <span class="ai-dot"></span>
+
+                Scientific AI
+
             </div>
+
+            <p data-i18n="ai_subtitle">
+
+                Ask questions about biology, neuroscience,
+                genetics, evolution and related sciences.
+
+            </p>
+
         </div>
 
-        <div class="lab-subtitle">
-            ctrl + k
+        <span class="ai-badge">
+            RESEARCH MODE
+        </span>
+
+    </div>
+
+
+
+    <div class="ai-messages" id="aiMessages">
+
+        <div class="ai-message system">
+
+            <span class="message-label">
+                SYSTEM
+            </span>
+
+            <p data-i18n="ai_welcome">
+
+                Ask a scientific question. The assistant is
+                designed to explain concepts clearly and
+                distinguish established knowledge from uncertainty.
+
+            </p>
+
         </div>
 
     </div>
 
 
-    <div class="lab-body">
 
-        <div class="lab-panel">
+    <div class="ai-input-area">
+
+        <textarea
+            id="aiInput"
+            placeholder="Ask a scientific question..."
+            data-placeholder="ai_placeholder">
+        </textarea>
+
+
+        <div class="ai-controls">
+
+            <div class="ai-modes">
+
+                <button class="mode active">
+                    Explain
+                </button>
+
+                <button class="mode">
+                    Analyze
+                </button>
+
+                <button class="mode">
+                    Summarize
+                </button>
+
+            </div>
+
+
+            <button
+                class="send-button"
+                id="sendButton">
+
+                Ask AI
+                <span>↗</span>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+```
+
+</section>
+
+<section class="section reveal" id="lab-text">
+
+```
+<div class="section-label">
+    05 / text
+</div>
+
+
+<div class="text-lab">
+
+    <div class="text-lab-header">
+
+        <div>
+
+            <h2>
+                Text Lab
+            </h2>
+
+            <p>
+                Translation and text utilities.
+            </p>
+
+        </div>
+
+        <span>
+            79 LANGUAGES
+        </span>
+
+    </div>
+
+
+    <div class="translation-grid">
+
+        <div>
 
             <textarea
-                id="inputText"
-                placeholder="Paste text here..."
-            ></textarea>
+                id="translateInput"
+                placeholder="Paste text here...">
+            </textarea>
 
-            <div class="actions">
+        </div>
 
-                <button class="action primary"
-                    onclick="translateText()">
-                    Translate → فارسی
-                </button>
 
-                <button class="action"
-                    onclick="copyText()">
-                    Copy
-                </button>
+        <div>
 
-                <button class="action"
-                    onclick="clearText()">
-                    Clear
-                </button>
+            <div
+                id="translationOutput"
+                class="translation-output">
+
+                Translation will appear here.
 
             </div>
 
         </div>
 
+    </div>
 
-        <div class="lab-panel">
 
-            <div id="output"
-                 class="output empty">
-                Output will appear here...
-            </div>
+    <div class="translation-actions">
 
-            <div class="actions">
+        <select id="languageSelect">
 
-                <button class="action"
-                    onclick="swapText()">
-                    Use output as input
-                </button>
+            <option value="fa">Persian — فارسی</option>
+            <option value="en">English</option>
+            <option value="de">German — Deutsch</option>
+            <option value="fr">French — Français</option>
+            <option value="es">Spanish — Español</option>
+            <option value="it">Italian — Italiano</option>
+            <option value="pt">Portuguese</option>
+            <option value="ru">Russian</option>
+            <option value="ar">Arabic — العربية</option>
+            <option value="tr">Turkish</option>
+            <option value="ja">Japanese</option>
+            <option value="ko">Korean</option>
+            <option value="zh-CN">Chinese</option>
+            <option value="hi">Hindi</option>
+            <option value="nl">Dutch</option>
+            <option value="pl">Polish</option>
+            <option value="sv">Swedish</option>
+            <option value="uk">Ukrainian</option>
+            <option value="el">Greek</option>
+            <option value="he">Hebrew</option>
+            <option value="id">Indonesian</option>
+            <option value="vi">Vietnamese</option>
+            <option value="th">Thai</option>
 
-            </div>
+        </select>
 
-        </div>
+
+        <button
+            class="translate-button"
+            onclick="translateText()">
+
+            Translate
+
+        </button>
 
     </div>
 
@@ -768,53 +562,29 @@ footer {
 
 </section>
 
-<section class="section">
+<section class="section reveal" id="about">
 
 ```
-<div class="section-label">04 / reading</div>
-
-<div class="reading">
-
-    <div class="reading-item">
-        <span>Neuroscience & Brain Science</span>
-        <span class="reading-type">FIELD</span>
-    </div>
-
-    <div class="reading-item">
-        <span>Genetics & Genomics</span>
-        <span class="reading-type">FIELD</span>
-    </div>
-
-    <div class="reading-item">
-        <span>Evolution & Natural Selection</span>
-        <span class="reading-type">FIELD</span>
-    </div>
-
-    <div class="reading-item">
-        <span>Cognitive Science</span>
-        <span class="reading-type">FIELD</span>
-    </div>
-
+<div class="section-label">
+    06 / about
 </div>
-```
 
-</section>
+<div class="about-card">
 
-<section class="section" id="about">
+    <div class="card-index">
+        ABOUT
+    </div>
 
-```
-<div class="section-label">05 / about</div>
+    <h2 data-i18n="about_title">
+        Why this exists.
+    </h2>
 
-<div class="card">
+    <p data-i18n="about_text">
 
-    <div class="card-number">ABOUT</div>
-
-    <h2>Why this exists</h2>
-
-    <p>
         This is not intended to be a conventional portfolio.
         It is a small digital space for things I am learning,
         building, reading and thinking about.
+
     </p>
 
 </div>
@@ -824,10 +594,12 @@ footer {
 
 </main>
 
-<footer>
+<footer class="container">
 
 ```
-<span>© 2026 AMIRYASIN HOSSEINI</span>
+<span>
+    © 2026 AMIRYASIN HOSSEINI
+</span>
 
 <span>
     built quietly.
@@ -836,257 +608,82 @@ footer {
 
 </footer>
 
+<!-- LANGUAGE MENU -->
+
+<div id="languageMenu" class="language-menu">
+
+```
+<div class="language-menu-inner">
+
+    <div class="language-menu-title">
+        SELECT LANGUAGE
+    </div>
+
+    <div class="language-grid" id="languageGrid"></div>
+
+</div>
+```
+
 </div>
 
-<!-- Command Palette -->
+<!-- ARTICLE MODAL -->
 
-<div id="paletteBackdrop" class="palette-backdrop">
+<div id="articleModal" class="modal">
+
+```
+<div class="modal-content">
+
+    <button
+        class="modal-close"
+        onclick="closeArticle()">
+        ×
+    </button>
+
+    <div id="articleContent"></div>
+
+</div>
+```
+
+</div>
+
+<!-- COMMAND PALETTE -->
+
+<div id="commandPalette" class="command-palette">
 
 ```
 <div class="palette">
 
     <input
         id="paletteInput"
-        class="palette-input"
         placeholder="Search or jump to..."
-        autocomplete="off"
     >
 
-    <div class="palette-items">
+    <button onclick="scrollToSection('lab')">
+        → Scientific AI
+    </button>
 
-        <button class="palette-item"
-            onclick="goTo('lab')">
-            → Text Lab
-        </button>
+    <button onclick="scrollToSection('lab-text')">
+        → Text Lab
+    </button>
 
-        <button class="palette-item"
-            onclick="goTo('about')">
-            → About
-        </button>
+    <button onclick="scrollToSection('about')">
+        → About
+    </button>
 
-        <button class="palette-item"
-            onclick="goToTop()">
-            → Home
-        </button>
+    <button onclick="scrollToTop()">
+        → Home
+    </button>
 
-    </div>
-
-    <div class="palette-hint">
+    <small>
         ESC to close
-    </div>
+    </small>
 
 </div>
 ```
 
 </div>
 
-<script>
-
-/* ============================
-   TEXT LAB
-============================ */
-
-async function translateText() {
-
-    const input = document
-        .getElementById("inputText")
-        .value
-        .trim();
-
-    const output = document
-        .getElementById("output");
-
-    if (!input) {
-        output.classList.remove("empty");
-        output.textContent = "Enter some text first.";
-        return;
-    }
-
-    output.classList.remove("empty");
-    output.textContent = "Translating...";
-
-    try {
-
-        const url =
-            "https://api.mymemory.translated.net/get?q=" +
-            encodeURIComponent(input) +
-            "&langpair=en|fa";
-
-        const response = await fetch(url);
-
-        const data = await response.json();
-
-        if (
-            data &&
-            data.responseData &&
-            data.responseData.translatedText
-        ) {
-
-            output.textContent =
-                data.responseData.translatedText;
-
-        } else {
-
-            output.textContent =
-                "Translation failed.";
-
-        }
-
-    } catch (error) {
-
-        output.textContent =
-            "Translation service is currently unavailable.";
-
-    }
-}
-
-
-function copyText() {
-
-    const output =
-        document.getElementById("output");
-
-    if (!output.textContent.trim()) return;
-
-    navigator.clipboard.writeText(
-        output.textContent
-    );
-}
-
-
-function clearText() {
-
-    document.getElementById("inputText").value = "";
-
-    const output =
-        document.getElementById("output");
-
-    output.textContent =
-        "Output will appear here...";
-
-    output.classList.add("empty");
-}
-
-
-function swapText() {
-
-    const output =
-        document.getElementById("output");
-
-    const input =
-        document.getElementById("inputText");
-
-    if (
-        output.textContent &&
-        !output.classList.contains("empty")
-    ) {
-
-        input.value =
-            output.textContent;
-
-    }
-}
-
-
-/* ============================
-   COMMAND PALETTE
-============================ */
-
-const backdrop =
-    document.getElementById("paletteBackdrop");
-
-const paletteInput =
-    document.getElementById("paletteInput");
-
-
-function openPalette() {
-
-    backdrop.classList.add("open");
-
-    setTimeout(() => {
-        paletteInput.focus();
-    }, 50);
-}
-
-
-function closePalette() {
-
-    backdrop.classList.remove("open");
-
-    paletteInput.value = "";
-
-}
-
-
-function goTo(id) {
-
-    closePalette();
-
-    document
-        .getElementById(id)
-        .scrollIntoView({
-            behavior: "smooth"
-        });
-}
-
-
-function goToTop() {
-
-    closePalette();
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-
-}
-
-
-document.addEventListener(
-    "keydown",
-    function(event) {
-
-        if (
-            (event.ctrlKey || event.metaKey) &&
-            event.key.toLowerCase() === "k"
-        ) {
-
-            event.preventDefault();
-
-            if (
-                backdrop.classList.contains("open")
-            ) {
-
-                closePalette();
-
-            } else {
-
-                openPalette();
-
-            }
-
-        }
-
-        if (event.key === "Escape") {
-            closePalette();
-        }
-
-    }
-);
-
-
-backdrop.addEventListener(
-    "click",
-    function(event) {
-
-        if (event.target === backdrop) {
-            closePalette();
-        }
-
-    }
-);
-
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>
