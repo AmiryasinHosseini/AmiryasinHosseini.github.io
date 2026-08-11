@@ -337,12 +337,274 @@
       *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
       .cursor-glow{display:none}
     }
+  
+    /* === Advanced interface layer === */
+    .header-actions .icon-btn[title]{font-size:.9rem}
+    .utility-panel{
+      position:fixed;inset:0;z-index:160;display:grid;place-items:start center;padding-top:12vh;
+      background:rgba(2,5,6,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+      opacity:0;visibility:hidden;pointer-events:none;transition:.22s ease;
+    }
+    .utility-panel.open{opacity:1;visibility:visible;pointer-events:auto}
+    .command-box{
+      width:min(720px,calc(100% - 28px));border:1px solid var(--border-strong);border-radius:20px;
+      background:rgba(12,17,20,.97);box-shadow:0 30px 100px rgba(0,0,0,.5);overflow:hidden;
+      transform:translateY(-12px) scale(.98);transition:.22s var(--ease);
+    }
+    .utility-panel.open .command-box{transform:none}
+    .command-input{
+      width:100%;padding:19px 20px;background:transparent;border:0;border-bottom:1px solid var(--border);
+      outline:0;color:var(--text);font-size:1rem;
+    }
+    .command-list{max-height:55vh;overflow:auto;padding:8px}
+    .command-item{
+      width:100%;display:flex;align-items:center;justify-content:space-between;gap:15px;
+      padding:13px 14px;border-radius:12px;background:transparent;color:var(--soft);cursor:pointer;text-align:left;
+    }
+    .command-item:hover,.command-item.selected{background:rgba(168,240,194,.08);color:var(--text)}
+    .command-item kbd,.shortcut{
+      border:1px solid var(--border);border-radius:6px;padding:2px 6px;color:var(--muted);
+      font:400 .62rem "DM Mono",monospace
+    }
+    .theme-light{
+      --bg:#eef3f0;--surface:#fff;--surface-2:#f4f8f6;--surface-3:#e8efeb;
+      --border:rgba(20,55,40,.14);--border-strong:rgba(25,115,65,.34);
+      --text:#102018;--muted:#5f7068;--soft:#34483e;--accent:#167d49;--accent-2:#24935c;
+      --shadow:0 28px 90px rgba(20,50,35,.13);
+    }
+    .theme-light body{background:radial-gradient(circle at 80% -5%,rgba(30,150,85,.12),transparent 27rem),var(--bg)}
+    .theme-light .topbar{background:rgba(238,243,240,.55)}
+    .theme-light .topbar.scrolled{background:rgba(238,243,240,.86)}
+    .theme-light .mobile-menu,.theme-light .toast,.theme-light .command-box{background:rgba(255,255,255,.96)}
+    .theme-light textarea,.theme-light .output{background:#f7faf8;color:var(--text)}
+    .reading-bar{
+      position:fixed;left:0;top:2px;height:2px;width:0;z-index:121;
+      background:linear-gradient(90deg,var(--accent-2),var(--accent));box-shadow:0 0 14px var(--accent);
+    }
+    .research-tools{display:flex;gap:10px;align-items:center;margin-bottom:18px;flex-wrap:wrap}
+    .search-field{
+      flex:1;min-width:220px;min-height:44px;padding:10px 13px;border:1px solid var(--border);
+      border-radius:12px;background:rgba(255,255,255,.025);color:var(--text);outline:0;
+    }
+    .search-field:focus{border-color:var(--border-strong);box-shadow:0 0 0 4px rgba(168,240,194,.05)}
+    .filter-btn{min-height:44px}
+    .article.hidden{display:none}
+    .empty-state{
+      display:none;padding:22px;border:1px dashed var(--border);border-radius:16px;color:var(--muted);
+      text-align:center;margin-top:10px
+    }
+    .empty-state.show{display:block}
+    .article-modal{
+      position:fixed;inset:0;z-index:150;display:grid;place-items:center;padding:20px;
+      background:rgba(2,5,6,.78);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+      opacity:0;visibility:hidden;pointer-events:none;transition:.22s ease;
+    }
+    .article-modal.open{opacity:1;visibility:visible;pointer-events:auto}
+    .article-reader{
+      width:min(820px,100%);max-height:min(78vh,760px);overflow:auto;padding:30px;
+      border:1px solid var(--border-strong);border-radius:22px;background:var(--surface);
+      box-shadow:var(--shadow);transform:translateY(15px);transition:.25s var(--ease)
+    }
+    .article-modal.open .article-reader{transform:none}
+    .reader-top{display:flex;justify-content:space-between;gap:15px;align-items:flex-start}
+    .reader-close{flex:0 0 auto}
+    .reader-content{margin-top:25px;color:var(--soft)}
+    .reader-content h3{font-size:2rem;line-height:1.1;margin-bottom:12px;color:var(--text)}
+    .reader-content p{margin:12px 0}
+    .reader-content ul{padding-inline-start:20px}
+    .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:20px}
+    .stat{padding:15px;border:1px solid var(--border);border-radius:14px;background:rgba(255,255,255,.02)}
+    .stat strong{display:block;font:500 1.2rem "DM Mono",monospace;color:var(--accent)}
+    .stat span{font-size:.7rem;color:var(--muted)}
+    .focus-mode main,.focus-mode footer{filter:none}
+    .focus-mode .topbar{transform:translateY(-100%);opacity:.1}
+    .focus-mode .visual{display:none}
+    .focus-mode .hero{grid-template-columns:1fr;max-width:900px}
+    .focus-mode .hero-copy{max-width:760px}
+    .focus-mode section:not(#lab){display:none}
+    .focus-mode #lab{min-height:70vh}
+    .shortcut-help{margin-top:8px;color:var(--muted);font:400 .65rem "DM Mono",monospace}
+    @media(max-width:640px){
+      .stat-row{grid-template-columns:1fr}
+      .article-reader{padding:22px}
+      .command-list{max-height:60vh}
+    }
+
+
+    /* === V2 utility features — isolated namespace === */
+    .ayx-tools{
+      position:fixed;right:20px;bottom:78px;z-index:140;display:flex;flex-direction:column;gap:8px;
+    }
+    .ayx-tool{
+      width:42px;height:42px;border:1px solid var(--border);border-radius:13px;
+      background:rgba(12,17,20,.84);backdrop-filter:blur(14px);color:var(--soft);cursor:pointer;
+      box-shadow:0 10px 30px rgba(0,0,0,.18);transition:.22s var(--ease);font-size:.9rem;
+    }
+    .theme-light .ayx-tool{background:rgba(255,255,255,.9)}
+    .ayx-tool:hover{color:var(--accent);border-color:var(--border-strong);transform:translateY(-3px)}
+    .ayx-overlay{
+      position:fixed;inset:0;z-index:170;display:grid;place-items:center;padding:18px;
+      background:rgba(2,5,6,.76);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+      opacity:0;visibility:hidden;pointer-events:none;transition:.2s ease;
+    }
+    .ayx-overlay.open{opacity:1;visibility:visible;pointer-events:auto}
+    .ayx-panel{
+      width:min(760px,100%);max-height:min(82vh,820px);overflow:auto;padding:26px;
+      border:1px solid var(--border-strong);border-radius:22px;background:var(--surface);
+      box-shadow:var(--shadow);transform:translateY(12px) scale(.985);transition:.22s var(--ease);
+    }
+    .ayx-overlay.open .ayx-panel{transform:none}
+    .ayx-panel-head{display:flex;justify-content:space-between;gap:18px;align-items:flex-start}
+    .ayx-panel h3{font-size:1.55rem;letter-spacing:-.04em}
+    .ayx-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:18px}
+    .ayx-box{padding:16px;border:1px solid var(--border);border-radius:15px;background:rgba(255,255,255,.02)}
+    .ayx-box strong{display:block;color:var(--accent);font:500 1.35rem "DM Mono",monospace}
+    .ayx-box small{color:var(--muted)}
+    .ayx-note-input{
+      width:100%;min-height:180px;margin-top:16px;padding:14px;border:1px solid var(--border);
+      border-radius:14px;background:#080c0e;color:var(--text);outline:0;resize:vertical;
+    }
+    .theme-light .ayx-note-input{background:#f7faf8}
+    .ayx-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:13px}
+    .ayx-timer{text-align:center;padding:25px 0 10px}
+    .ayx-clock{font:500 clamp(3.5rem,12vw,6.5rem)/1 "DM Mono",monospace;color:var(--accent);letter-spacing:-.08em}
+    .ayx-progress{height:5px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden;margin:22px 0}
+    .ayx-progress i{display:block;width:0;height:100%;background:var(--accent);transition:width .2s linear}
+    .ayx-list{display:grid;gap:8px;margin-top:16px}
+    .ayx-list button{padding:14px;text-align:left;border:1px solid var(--border);border-radius:13px;background:rgba(255,255,255,.02);color:var(--soft);cursor:pointer}
+    .ayx-list button:hover{border-color:var(--border-strong);color:var(--text)}
+    .ayx-range{width:100%;accent-color:var(--accent)}
+    .ayx-kbd-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px}
+    .ayx-kbd-row{display:flex;justify-content:space-between;gap:10px;padding:11px;border-bottom:1px solid var(--border);color:var(--muted)}
+    .ayx-kbd-row kbd{border:1px solid var(--border);border-radius:6px;padding:2px 6px;color:var(--soft);font:400 .65rem "DM Mono",monospace}
+    @media(max-width:640px){
+      .ayx-tools{right:12px;bottom:66px}.ayx-grid,.ayx-kbd-grid{grid-template-columns:1fr}
+      .ayx-panel{padding:21px}.ayx-tool{width:40px;height:40px}
+    }
+
+
+/* === Scientific research + productivity extension === */
+.science-hub{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}
+.science-link{display:flex;flex-direction:column;gap:8px;min-height:150px;padding:20px;border:1px solid var(--border);border-radius:18px;background:rgba(255,255,255,.025);transition:.28s var(--ease)}
+.science-link:hover{transform:translateY(-5px);border-color:var(--border-strong);box-shadow:var(--shadow)}
+.science-link strong{font-size:1rem}.science-link span{color:var(--muted);font-size:.78rem}.science-link small{color:var(--accent);font:400 .64rem "DM Mono",monospace;text-transform:uppercase;letter-spacing:.08em}
+.tool-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:14px}.mini-panel{padding:20px;border:1px solid var(--border);border-radius:18px;background:var(--surface)}
+.mini-panel h3{font-size:1rem;margin-bottom:8px}.mini-panel p{color:var(--muted);font-size:.78rem}.mini-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:13px}.mini-actions .button{min-height:40px;padding:8px 12px}
+.note-box{width:100%;min-height:120px;margin-top:10px;padding:13px;border:1px solid var(--border);border-radius:13px;background:#080c0e;color:var(--text);outline:0;resize:vertical}.theme-light .note-box{background:#f7faf8;color:var(--text)}
+.science-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}.science-toolbar input{flex:1;min-width:180px}
+.timer-display{font:500 2.2rem "DM Mono",monospace;color:var(--accent);margin:8px 0}.queue-item{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);font-size:.78rem}.queue-item:last-child{border-bottom:0}.queue-empty{color:var(--muted);font-size:.78rem}
+.favorites{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.favorite-pill{padding:7px 10px;border:1px solid var(--border);border-radius:999px;font:400 .65rem "DM Mono",monospace;color:var(--soft);cursor:pointer}.favorite-pill:hover{color:var(--accent);border-color:var(--accent)}
+.contrast-mode{filter:contrast(1.12)}.dyslexia-mode body,.dyslexia-mode body *{letter-spacing:.015em}.dyslexia-mode body{font-family:Arial,"Trebuchet MS",sans-serif}.large-text body{font-size:1.08rem}
+.offline-badge{position:fixed;left:16px;bottom:16px;z-index:140;padding:8px 11px;border:1px solid var(--border);border-radius:10px;background:rgba(12,17,20,.92);color:var(--muted);font:400 .62rem "DM Mono",monospace;opacity:0;transform:translateY(8px);transition:.25s}.offline-badge.show{opacity:1;transform:none}.theme-light .offline-badge{background:rgba(255,255,255,.95)}
+@media(max-width:900px){.science-hub{grid-template-columns:1fr 1fr}.tool-grid{grid-template-columns:1fr}}
+@media(max-width:640px){.science-hub{grid-template-columns:1fr}.science-link{min-height:120px}.offline-badge{bottom:70px}}
+
+  
+/* === Researcher Identity / Prestige Layer === */
+.scientist-identity{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 0}
+.identity-chip{font:500 .62rem "DM Mono",monospace;letter-spacing:.08em;text-transform:uppercase;padding:7px 10px;border:1px solid var(--border);border-radius:999px;background:rgba(168,240,194,.035);color:var(--soft)}
+.identity-chip.verified{border-color:rgba(168,240,194,.3);color:var(--accent);box-shadow:0 0 24px rgba(168,240,194,.04)}
+.research-credibility{margin-top:42px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:22px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border)}
+.cred-cell{background:var(--bg);padding:18px;min-height:105px}
+.cred-cell strong{display:block;font:500 1.35rem "DM Mono",monospace;color:var(--accent);margin-bottom:7px}
+.cred-cell span{font-size:.72rem;color:var(--muted);line-height:1.5}
+.evidence-panel{margin-top:24px;padding:24px;border:1px solid var(--border-strong);border-radius:18px;background:linear-gradient(135deg,rgba(168,240,194,.055),transparent 55%)}
+.evidence-head{display:flex;justify-content:space-between;gap:20px;align-items:end;margin-bottom:18px}
+.evidence-head h3{margin:0}.evidence-head p{margin:5px 0 0;color:var(--muted);font-size:.78rem}
+.evidence-score{font:500 1.4rem "DM Mono",monospace;color:var(--accent);white-space:nowrap}
+.evidence-track{height:5px;background:var(--surface-3);border-radius:99px;overflow:hidden}.evidence-fill{height:100%;width:92%;background:linear-gradient(90deg,var(--accent-2),var(--accent));border-radius:inherit}
+.method-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}.method-item{padding:14px;border:1px solid var(--border);border-radius:12px}.method-item b{font-size:.78rem}.method-item p{font-size:.68rem;color:var(--muted);margin:6px 0 0;line-height:1.55}
+.source-hub{margin-top:22px}.source-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}.source-card{display:flex;flex-direction:column;justify-content:space-between;min-height:125px;padding:16px;border:1px solid var(--border);border-radius:15px;background:rgba(255,255,255,.018);transition:.2s ease}.source-card:hover{transform:translateY(-4px);border-color:var(--border-strong);box-shadow:var(--shadow)}.source-card .source-name{font-weight:600}.source-card small{color:var(--muted);font-size:.65rem;line-height:1.45;margin-top:7px}.source-card a{margin-top:15px;color:var(--accent);font:500 .62rem "DM Mono",monospace;text-decoration:none}
+.timeline{display:grid;gap:0;margin-top:20px;border-left:1px solid var(--border-strong);padding-left:22px}.timeline-item{position:relative;padding:0 0 22px}.timeline-item::before{content:"";position:absolute;left:-27px;top:4px;width:8px;height:8px;border:1px solid var(--accent);border-radius:50%;background:var(--bg);box-shadow:0 0 12px rgba(168,240,194,.35)}.timeline-item .year{font:500 .62rem "DM Mono",monospace;color:var(--accent)}.timeline-item h4{margin:5px 0 3px}.timeline-item p{margin:0;color:var(--muted);font-size:.72rem;line-height:1.6}
+.science-console{position:fixed;right:20px;bottom:20px;z-index:130;display:flex;gap:7px;flex-direction:column;align-items:flex-end}.console-toggle{width:46px;height:46px;border-radius:50%;border:1px solid var(--border-strong);background:var(--surface);color:var(--accent);cursor:pointer;box-shadow:var(--shadow)}.console-menu{display:none;width:240px;padding:8px;border:1px solid var(--border-strong);border-radius:15px;background:rgba(12,17,20,.96);backdrop-filter:blur(14px);box-shadow:var(--shadow)}.console-menu.open{display:block}.console-menu button{display:block;width:100%;padding:10px;border:0;border-radius:9px;background:transparent;color:var(--soft);text-align:left;cursor:pointer;font-size:.72rem}.console-menu button:hover{background:rgba(168,240,194,.07);color:var(--text)}
+@media(max-width:900px){.research-credibility{grid-template-columns:repeat(2,1fr)}.source-grid{grid-template-columns:repeat(2,1fr)}.method-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.research-credibility,.source-grid,.method-grid{grid-template-columns:1fr}.science-console{right:12px;bottom:12px}}
+
+  
+/* === V6: stable theme system + professional controls === */
+:root{--ayx-purple:#b76cff;--ayx-purple-2:#7c3cff;--ayx-purple-hot:#e0a8ff}
+.theme-purple{
+ --bg:#050308;--surface:#0b0712;--surface-2:#100a19;--surface-3:#160d22;
+ --border:rgba(183,108,255,.18);--border-strong:rgba(183,108,255,.48);
+ --text:#f7efff;--muted:#9d8ba9;--soft:#d9cbe4;--accent:#c47aff;--accent-2:#7c3cff;
+ --shadow:0 28px 100px rgba(92,25,180,.22)
+}
+.theme-purple body{background:radial-gradient(circle at 78% -10%,rgba(150,65,255,.22),transparent 30rem),radial-gradient(circle at 8% 40%,rgba(74,20,140,.16),transparent 26rem),var(--bg)}
+.theme-purple .topbar{background:rgba(5,3,8,.55)}
+.theme-purple .topbar.scrolled{background:rgba(5,3,8,.86);box-shadow:0 12px 45px rgba(90,20,160,.12)}
+.theme-purple .progress,.theme-purple .reading-bar{background:linear-gradient(90deg,#7c3cff,#c47aff,#e0a8ff);box-shadow:0 0 18px #b76cff}
+.theme-purple .brand-dot{background:#c47aff;box-shadow:0 0 22px #b76cff}
+.theme-purple .icon-btn:hover{color:#e0a8ff}
+.theme-purple .card:hover,.theme-purple .tool-panel:hover,.theme-purple .ayx-tool:hover{box-shadow:0 18px 60px rgba(119,42,220,.14)}
+.theme-purple .hero h1 span,.theme-purple .eyebrow,.theme-purple .label{color:#c47aff}
+.theme-purple textarea,.theme-purple .output,.theme-purple .search-field{background:#08050d}
+.theme-purple .mobile-menu{background:rgba(7,4,11,.97);border-color:rgba(183,108,255,.28)}
+.theme-purple .theme-select{background:#0b0712;color:#f7efff;border-color:rgba(183,108,255,.4)}
+.theme-purple .pro-menu,.theme-purple .pro-menu-panel{background:rgba(8,5,13,.97);border-color:rgba(183,108,255,.3)}
+.theme-green{
+ --bg:#080b0d;--surface:#0d1315;--surface-2:#11191b;--surface-3:#162123;
+ --border:rgba(168,240,194,.12);--border-strong:rgba(168,240,194,.32);
+ --text:#edf7f0;--muted:#718078;--soft:#c4d4cb;--accent:#a8f0c2;--accent-2:#55d88c;
+ --shadow:0 28px 90px rgba(0,0,0,.32)
+}
+.theme-green body{background:radial-gradient(circle at 78% -10%,rgba(70,210,125,.12),transparent 30rem),radial-gradient(circle at 8% 40%,rgba(25,120,65,.08),transparent 26rem),var(--bg)}
+.theme-green .progress,.theme-green .reading-bar{background:linear-gradient(90deg,#55d88c,#a8f0c2);box-shadow:0 0 14px rgba(85,216,140,.7)}
+.theme-green .brand-dot{background:#a8f0c2;box-shadow:0 0 18px rgba(168,240,194,.7)}
+.theme-blue{--bg:#050a12;--surface:#0a111c;--surface-2:#0f1927;--surface-3:#142238;--border:rgba(113,183,255,.14);--border-strong:rgba(113,183,255,.38);--text:#edf6ff;--muted:#7f94a8;--soft:#c9d9e8;--accent:#71b7ff;--accent-2:#2677ff;--shadow:0 28px 90px rgba(20,80,150,.22)}
+.theme-blue body{background:radial-gradient(circle at 78% -10%,rgba(38,119,255,.18),transparent 30rem),radial-gradient(circle at 8% 40%,rgba(30,100,190,.10),transparent 26rem),var(--bg)}
+.theme-cyan{--bg:#031011;--surface:#07191b;--surface-2:#0b2225;--surface-3:#102b2e;--border:rgba(95,244,232,.14);--border-strong:rgba(95,244,232,.4);--text:#eaffff;--muted:#78999b;--soft:#c4e2e3;--accent:#5ff4e8;--accent-2:#10b9d8;--shadow:0 28px 90px rgba(0,130,145,.22)}
+.theme-cyan body{background:radial-gradient(circle at 78% -10%,rgba(16,185,216,.18),transparent 30rem),radial-gradient(circle at 8% 40%,rgba(20,150,145,.10),transparent 26rem),var(--bg)}
+.theme-red{--bg:#110609;--surface:#19090d;--surface-2:#210d12;--surface-3:#2a1118;--border:rgba(255,113,140,.14);--border-strong:rgba(255,113,140,.38);--text:#fff0f3;--muted:#a7868e;--soft:#e2c9ce;--accent:#ff718c;--accent-2:#d92d55;--shadow:0 28px 90px rgba(160,25,55,.22)}
+.theme-red body{background:radial-gradient(circle at 78% -10%,rgba(217,45,85,.18),transparent 30rem),radial-gradient(circle at 8% 40%,rgba(150,25,55,.10),transparent 26rem),var(--bg)}
+.theme-amber{--bg:#100c05;--surface:#181208;--surface-2:#21190b;--surface-3:#2a200e;--border:rgba(255,199,106,.15);--border-strong:rgba(255,199,106,.4);--text:#fff8e9;--muted:#a99b7c;--soft:#e4d6b8;--accent:#ffc76a;--accent-2:#e88a1d;--shadow:0 28px 90px rgba(170,95,20,.22)}
+.theme-amber body{background:radial-gradient(circle at 78% -10%,rgba(232,138,29,.18),transparent 30rem),radial-gradient(circle at 8% 40%,rgba(160,90,20,.10),transparent 26rem),var(--bg)}
+.theme-ice{--bg:#071015;--surface:#0b1820;--surface-2:#10212a;--surface-3:#162c37;--border:rgba(212,243,255,.15);--border-strong:rgba(212,243,255,.38);--text:#f0fbff;--muted:#839ba5;--soft:#c9dfe7;--accent:#d4f3ff;--accent-2:#66bde8;--shadow:0 28px 90px rgba(50,130,170,.2)}
+.theme-ice body{background:radial-gradient(circle at 78% -10%,rgba(102,189,232,.16),transparent 30rem),radial-gradient(circle at 8% 40%,rgba(80,150,180,.10),transparent 26rem),var(--bg)}
+.theme-rose{--bg:#11070f;--surface:#190a17;--surface-2:#220d1f;--surface-3:#2b1128;--border:rgba(255,139,209,.15);--border-strong:rgba(255,139,209,.4);--text:#fff0fa;--muted:#a78a9d;--soft:#e3cadb;--accent:#ff8bd1;--accent-2:#df3c9d;--shadow:0 28px 90px rgba(170,35,120,.22)}
+.theme-rose body{background:radial-gradient(circle at 78% -10%,rgba(223,60,157,.18),transparent 30rem),radial-gradient(circle at 8% 40%,rgba(150,35,115,.10),transparent 26rem),var(--bg)}
+.theme-violet{--bg:#090612;--surface:#100a1b;--surface-2:#160e24;--surface-3:#1d1230;--border:rgba(184,156,255,.15);--border-strong:rgba(184,156,255,.4);--text:#f5efff;--muted:#9184a8;--soft:#d6cce7;--accent:#b89cff;--accent-2:#7250e8;--shadow:0 28px 90px rgba(100,65,190,.22)}
+.theme-violet body{background:radial-gradient(circle at 78% -10%,rgba(114,80,232,.18),transparent 30rem),radial-gradient(circle at 8% 40%,rgba(80,55,150,.10),transparent 26rem),var(--bg)}
+.theme-light{--bg:#eef3f0;--surface:#ffffff;--surface-2:#f5f9f7;--surface-3:#e9f0ec;--border:rgba(20,55,40,.14);--border-strong:rgba(25,115,65,.34);--text:#102018;--muted:#607168;--soft:#34483e;--accent:#167d49;--accent-2:#24935c;--shadow:0 28px 90px rgba(20,50,35,.13)}
+.theme-light body{background:radial-gradient(circle at 80% -5%,rgba(30,150,85,.12),transparent 27rem),var(--bg)}
+.theme-blue .progress,.theme-blue .reading-bar{background:linear-gradient(90deg,#2677ff,#71b7ff);box-shadow:0 0 16px rgba(113,183,255,.65)}
+.theme-cyan .progress,.theme-cyan .reading-bar{background:linear-gradient(90deg,#10b9d8,#5ff4e8);box-shadow:0 0 16px rgba(95,244,232,.6)}
+.theme-red .progress,.theme-red .reading-bar{background:linear-gradient(90deg,#d92d55,#ff718c);box-shadow:0 0 16px rgba(255,113,140,.55)}
+.theme-amber .progress,.theme-amber .reading-bar{background:linear-gradient(90deg,#e88a1d,#ffc76a);box-shadow:0 0 16px rgba(255,199,106,.55)}
+.theme-ice .progress,.theme-ice .reading-bar{background:linear-gradient(90deg,#66bde8,#d4f3ff);box-shadow:0 0 16px rgba(212,243,255,.5)}
+.theme-rose .progress,.theme-rose .reading-bar{background:linear-gradient(90deg,#df3c9d,#ff8bd1);box-shadow:0 0 16px rgba(255,139,209,.55)}
+.theme-violet .progress,.theme-violet .reading-bar{background:linear-gradient(90deg,#7250e8,#b89cff);box-shadow:0 0 16px rgba(184,156,255,.55)}
+.theme-select-wrap{position:relative;display:flex;align-items:center}
+.theme-select{height:40px;max-width:132px;padding:0 32px 0 11px;border:1px solid var(--border);border-radius:12px;background:rgba(255,255,255,.025);color:var(--text);font:500 .68rem "DM Mono",monospace;outline:0;cursor:pointer}
+.theme-select:focus{border-color:var(--border-strong);box-shadow:0 0 0 3px rgba(183,108,255,.08)}
+.theme-select option{background:#0d1315;color:#edf7f0}
+.theme-light .theme-select option{background:#fff;color:#102018}
+.theme-purple .theme-select option{background:#0b0712;color:#f7efff}
+.theme-blue .theme-select option{background:#0a111c;color:#edf6ff}
+.theme-cyan .theme-select option{background:#07191b;color:#eaffff}
+.theme-red .theme-select option{background:#19090d;color:#fff0f3}
+.theme-amber .theme-select option{background:#181208;color:#fff8e9}
+.theme-ice .theme-select option{background:#0b1820;color:#f0fbff}
+.theme-rose .theme-select option{background:#190a17;color:#fff0fa}
+.theme-violet .theme-select option{background:#100a1b;color:#f5efff}
+.pro-menu{position:relative}
+.pro-menu-panel{position:absolute;right:0;top:48px;width:min(330px,calc(100vw - 28px));padding:10px;border:1px solid var(--border-strong);border-radius:16px;box-shadow:0 24px 80px rgba(0,0,0,.42);backdrop-filter:blur(18px);opacity:0;visibility:hidden;transform:translateY(-7px);pointer-events:none;transition:.2s;z-index:220}
+.pro-menu.open .pro-menu-panel{opacity:1;visibility:visible;transform:none;pointer-events:auto}
+.pro-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.pro-action{min-height:45px;padding:9px 10px;border:1px solid var(--border);border-radius:11px;background:rgba(255,255,255,.025);color:var(--soft);text-align:left;cursor:pointer;font:500 .65rem "DM Mono",monospace}
+.pro-action:hover{border-color:var(--border-strong);color:var(--text);background:rgba(183,108,255,.07)}
+.pro-action small{display:block;color:var(--muted);font-size:.52rem;margin-top:3px}
+.mobile-pro{display:none}
+@media(max-width:980px){.desktop-nav{display:none}.hamburger{display:grid}.theme-select{max-width:116px}.pro-menu{display:none}.mobile-pro{display:block;margin:10px 14px 14px;padding:12px;border:1px solid var(--border);border-radius:15px}.mobile-pro .theme-select{width:100%;max-width:none}.mobile-pro .pro-grid{margin-top:10px}}
+@media(max-width:640px){.header-actions{gap:5px}.header-actions .icon-btn{width:38px;height:38px}.theme-select-wrap{display:none}.mobile-menu{padding:12px}.mobile-menu a{min-height:46px;display:flex;align-items:center}.pro-grid{grid-template-columns:1fr 1fr}.pro-menu-panel{position:fixed;right:14px;top:70px}.hero{padding-top:96px}.container{width:min(100% - 28px,1180px)}.section-head{gap:18px}.card,.tool-panel{min-width:0;overflow:hidden}textarea,.search-field{font-size:16px}.button{min-height:44px}.article-reader{width:100%;max-height:84vh;padding:20px;border-radius:18px}.stat-row{grid-template-columns:1fr}.ayx-overlay{padding:12px}.ayx-modal{width:min(100%,680px);max-height:88vh;overflow:auto}.mobile-pro .pro-action{min-height:48px}}
+@media(prefers-reduced-motion:reduce){.pro-menu-panel{transition:none}.theme-purple .brand-dot{animation:none}}
+
   </style>
 </head>
 
 <body>
   <div class="cursor-glow" id="cursorGlow"></div>
   <div class="progress" id="progress"></div>
+  <div class="reading-bar" id="readingBar"></div>
 
   <header class="topbar" id="topbar">
     <div class="container nav-shell">
@@ -355,10 +617,49 @@
         <a href="#overview" data-section="overview">overview</a>
         <a href="#research" data-section="research">research</a>
         <a href="#lab" data-section="lab">text lab</a>
+        <a href="#science" data-section="science">science</a>
+        <a href="#tools" data-section="tools">tools</a>
         <a href="#about" data-section="about">about</a>
       </nav>
 
       <div class="header-actions">
+        <button class="icon-btn" id="searchButton" aria-label="Open command palette" title="Search / commands">⌕</button>
+        <button class="icon-btn" id="themeButton" aria-label="Toggle theme" title="Toggle theme">◐</button>
+        <button class="icon-btn" id="focusButton" aria-label="Toggle focus mode" title="Focus mode">◌</button>
+
+      <div class="theme-select-wrap">
+        <select class="theme-select" id="themeSelect" aria-label="Choose visual theme" title="Choose theme">
+          <option value="green">● Research Green</option>
+          <option value="purple">◈ Purple Black Neon</option>
+          <option value="blue">◆ Electric Blue</option>
+          <option value="cyan">◇ Cyan Lab</option>
+          <option value="red">◆ Crimson</option>
+          <option value="amber">◐ Amber</option>
+          <option value="ice">◇ Ice</option>
+          <option value="rose">✦ Rose Neon</option>
+          <option value="violet">✧ Deep Violet</option>
+          <option value="light">○ Scientific Light</option>
+        </select>
+      </div>
+      <div class="pro-menu" id="proMenu">
+        <button class="icon-btn" id="proButton" aria-label="Professional tools" aria-expanded="false" title="Professional tools">✦</button>
+        <div class="pro-menu-panel" id="proMenuPanel" aria-hidden="true">
+          <div class="label" style="padding:5px 5px 9px">PRO CONSOLE</div>
+          <div class="pro-grid">
+            <button class="pro-action" data-pro="stats">Dashboard<small>session metrics</small></button>
+            <button class="pro-action" data-pro="notebook">Notebook<small>research notes</small></button>
+            <button class="pro-action" data-pro="timer">Focus timer<small>deep work</small></button>
+            <button class="pro-action" data-pro="science">Science hub<small>trusted sources</small></button>
+            <button class="pro-action" data-pro="random">Random research<small>explore</small></button>
+            <button class="pro-action" data-pro="contrast">High contrast<small>readability</small></button>
+            <button class="pro-action" data-pro="fontplus">Text +<small>accessibility</small></button>
+            <button class="pro-action" data-pro="save">Save page<small>local favorites</small></button>
+            <button class="pro-action" data-pro="share">Share<small>native / clipboard</small></button>
+            <button class="pro-action" data-pro="top">Top<small>return home</small></button>
+          </div>
+        </div>
+      </div>
+
         <button class="icon-btn hamburger" id="menuButton" aria-label="Open menu" aria-expanded="false">
           <span></span><span></span>
         </button>
@@ -370,7 +671,23 @@
     <a href="#overview" data-section="overview">overview</a>
     <a href="#research" data-section="research">research</a>
     <a href="#lab" data-section="lab">text lab</a>
+    <a href="#science" data-section="science">science</a>
+    <a href="#tools" data-section="tools">tools</a>
     <a href="#about" data-section="about">about</a>
+
+    <div class="mobile-pro">
+      <div class="label">VISUAL SYSTEM</div>
+      <select class="theme-select" id="mobileThemeSelect" aria-label="Choose visual theme">
+        <option value="green">● Research Green</option><option value="purple">◈ Purple Black Neon</option><option value="blue">◆ Electric Blue</option><option value="cyan">◇ Cyan Lab</option><option value="red">◆ Crimson</option><option value="amber">◐ Amber</option><option value="ice">◇ Ice</option><option value="rose">✦ Rose Neon</option><option value="violet">✧ Deep Violet</option><option value="light">○ Scientific Light</option>
+      </select>
+      <div class="pro-grid">
+        <button class="pro-action" data-pro="stats">Dashboard<small>metrics</small></button><button class="pro-action" data-pro="notebook">Notebook<small>notes</small></button>
+        <button class="pro-action" data-pro="timer">Focus timer<small>deep work</small></button><button class="pro-action" data-pro="science">Science hub<small>sources</small></button>
+        <button class="pro-action" data-pro="random">Random research<small>explore</small></button><button class="pro-action" data-pro="contrast">Contrast<small>readability</small></button>
+        <button class="pro-action" data-pro="fontplus">Text +<small>accessibility</small></button><button class="pro-action" data-pro="save">Save page<small>favorites</small></button>
+        <button class="pro-action" data-pro="share">Share<small>native</small></button><button class="pro-action" data-pro="top">Top<small>home</small></button>
+      </div>
+    </div>
   </div>
 
   <main id="top">
@@ -381,6 +698,11 @@
         <p class="hero-copy">
           Student interested in understanding living systems — from molecules and genes to the brain, cognition and evolution.
         </p>
+        <div class="scientist-identity">
+          <span class="identity-chip verified">evidence-driven</span>
+          <span class="identity-chip">biology · cognition · evolution</span>
+          <span class="identity-chip">research notebook</span>
+        </div>
         <div class="hero-actions">
           <a href="#research" class="button primary"><span>Explore the space</span><span>↗</span></a>
           <a href="#lab" class="button"><span>Open text lab</span><span>↓</span></a>
@@ -402,7 +724,7 @@
       <div class="container reveal">
         <div class="section-head">
           <div>
-            <div class="section-number"></div>
+            <div class="section-number">01 / overview</div>
             <h2>Interests</h2>
           </div>
           <p class="section-description">A map of the questions, systems and disciplines I keep returning to.</p>
@@ -416,15 +738,15 @@
 
         <div class="grid" style="margin-top:22px">
           <article class="card">
-            <div class="label">1</div><h3>Approach</h3>
+            <div class="label">01</div><h3>Approach</h3>
             <p>Curious about how complex biological systems emerge from interactions between simpler components — and how those systems eventually produce cognition and behavior.</p>
           </article>
           <article class="card">
-            <div class="label">2</div><h3>Projects</h3>
+            <div class="label">02</div><h3>Projects</h3>
             <p>Experiments, small software projects, scientific notes, computational ideas and things worth building.</p>
           </article>
           <article class="card">
-            <div class="label">3</div><h3>Notes</h3>
+            <div class="label">03</div><h3>Notes</h3>
             <p>Short observations, concepts, questions and explanations collected while learning.</p>
           </article>
         </div>
@@ -434,10 +756,10 @@
     <section>
       <div class="container reveal">
         <div class="section-head">
-          <div><div class="section-number">now</div><h2>Current Focus</h2></div>
+          <div><div class="section-number">02 / now</div><h2>Current Focus</h2></div>
         </div>
         <div class="focus-panel">
-          <h3>Understanding the brain as a biological system</h3>
+          <h3>Understanding the brain as a biological system.</h3>
           <p>Exploring the relationship between genetics, cellular mechanisms, neural circuits, cognition and behavior.</p>
         </div>
       </div>
@@ -446,34 +768,39 @@
     <section id="research">
       <div class="container reveal">
         <div class="section-head">
-          <div><div class="section-number">research</div><h2>Reading Material</h2></div>
+          <div><div class="section-number">03 / research</div><h2>Reading Material</h2></div>
           <p class="section-description">Scientific articles and notes about evolutionary processes. These texts are intentionally excluded from automatic interface translation.</p>
         </div>
 
-        <div class="grid">
+        <div class="research-tools">
+          <input class="search-field" id="articleSearch" type="search" placeholder="Search research notes..." aria-label="Search research notes">
+          <button class="button filter-btn" id="clearSearch"><span>Clear</span></button>
+        </div>
+        <div class="grid" id="articleGrid">
           <article class="card article">
-            <div class="article-number">ARTICLE 1</div>
+            <div class="article-number">ARTICLE / 001</div>
             <div><h3>Natural Selection</h3><p>How variation, heritability and differential reproductive success produce evolutionary change.</p></div>
             <a class="article-link" href="#article" data-article="Natural Selection">read note →</a>
           </article>
           <article class="card article">
-            <div class="article-number">ARTICLE 2</div>
+            <div class="article-number">ARTICLE / 002</div>
             <div><h3>Genetic Drift</h3><p>Why random sampling can change allele frequencies, especially in small populations.</p></div>
             <a class="article-link" href="#article" data-article="Genetic Drift">read note →</a>
           </article>
           <article class="card article">
-            <div class="article-number">ARTICLE 3</div>
+            <div class="article-number">ARTICLE / 003</div>
             <div><h3>Evolution &amp; Genetics</h3><p>A compact introduction to the connection between genetic variation and evolutionary processes.</p></div>
             <a class="article-link" href="#article" data-article="Evolution & Genetics">read note →</a>
           </article>
         </div>
+        <div class="empty-state" id="emptyArticles">No matching research notes.</div>
       </div>
     </section>
 
     <section id="lab">
       <div class="container reveal">
         <div class="section-head">
-          <div><div class="section-number">intelligence &amp; text</div><h2>Text Lab</h2></div>
+          <div><div class="section-number">04 / intelligence &amp; text</div><h2>Text Lab</h2></div>
           <p class="section-description">A small utility for thinking and working with scientific questions.</p>
         </div>
 
@@ -488,15 +815,130 @@
       </div>
     </section>
 
+
+
+    <section id="science" aria-label="Scientific resources">
+      <div class="container reveal">
+        <div class="section-head">
+          <div><div class="section-number">06 / science network</div><h2>Scientific Network</h2></div>
+          <p class="section-description">Direct access to reputable research databases, journals, institutions and open scientific resources.</p>
+        </div>
+        <div class="research-tools"><input class="search-field" id="scienceSearch" type="search" placeholder="Search scientific resources..." aria-label="Search scientific resources"><button class="button filter-btn" id="scienceClear"><span>Clear</span></button></div>
+        <div class="science-hub" id="scienceHub">
+          <a class="science-link" data-science="pubmed biomedical medicine" href="https://pubmed.ncbi.nlm.nih.gov/" target="_blank" rel="noopener noreferrer"><small>Biomedical literature</small><strong>PubMed</strong><span>Search biomedical and life-science literature.</span></a>
+          <a class="science-link" data-science="pmc full text open access ncbi" href="https://pmc.ncbi.nlm.nih.gov/" target="_blank" rel="noopener noreferrer"><small>Open full text</small><strong>PubMed Central</strong><span>Free full-text archive of biomedical papers.</span></a>
+          <a class="science-link" data-science="ncbi genetics genomics" href="https://www.ncbi.nlm.nih.gov/" target="_blank" rel="noopener noreferrer"><small>Life sciences</small><strong>NCBI</strong><span>Genetics, genomics, literature and biological databases.</span></a>
+          <a class="science-link" data-science="nature journal biology science" href="https://www.nature.com/" target="_blank" rel="noopener noreferrer"><small>Peer-reviewed journal</small><strong>Nature</strong><span>Research and scientific news across disciplines.</span></a>
+          <a class="science-link" data-science="science aaass journal research" href="https://www.science.org/" target="_blank" rel="noopener noreferrer"><small>Peer-reviewed journal</small><strong>Science</strong><span>Research, reviews, commentary and science news.</span></a>
+          <a class="science-link" data-science="nih health biomedical" href="https://www.nih.gov/" target="_blank" rel="noopener noreferrer"><small>Research institution</small><strong>NIH</strong><span>Biomedical research, health and research resources.</span></a>
+          <a class="science-link" data-science="who health evidence" href="https://www.who.int/" target="_blank" rel="noopener noreferrer"><small>Global health</small><strong>WHO</strong><span>Evidence, health guidance and global health data.</span></a>
+          <a class="science-link" data-science="nasa space astronomy science" href="https://science.nasa.gov/" target="_blank" rel="noopener noreferrer"><small>Space science</small><strong>NASA Science</strong><span>Astrophysics, planetary science, Earth science and more.</span></a>
+          <a class="science-link" data-science="plos open access biology" href="https://plos.org/" target="_blank" rel="noopener noreferrer"><small>Open access</small><strong>PLOS</strong><span>Open-access scientific publishing and research.</span></a>
+          <a class="science-link" data-science="biorxiv biology preprint" href="https://www.biorxiv.org/" target="_blank" rel="noopener noreferrer"><small>Preprints</small><strong>bioRxiv</strong><span>Early research manuscripts in biology; not peer-reviewed by default.</span></a>
+          <a class="science-link" data-science="arxiv physics computer science biology" href="https://arxiv.org/" target="_blank" rel="noopener noreferrer"><small>Preprints</small><strong>arXiv</strong><span>Open research repository across science and computing.</span></a>
+          <a class="science-link" data-science="europe pmc biomedical" href="https://europepmc.org/" target="_blank" rel="noopener noreferrer"><small>Literature</small><strong>Europe PMC</strong><span>Biomedical literature, grants and related research.</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section id="tools">
+      <div class="container reveal">
+        <div class="section-head"><div><div class="section-number">07 / tools</div><h2>Research Toolkit</h2></div><p class="section-description">Local tools for reading, studying and organizing research without external dependencies.</p></div>
+        <div class="tool-grid">
+          <div class="mini-panel"><div class="label">01 / NOTEBOOK</div><h3>Persistent research notebook</h3><p>Autosaves locally in your browser. Nothing is sent to a server.</p><textarea class="note-box" id="researchNotebook" placeholder="Write hypotheses, questions, citations, ideas..."></textarea><div class="mini-actions"><button class="button" id="clearNotebook"><span>Clear</span></button><button class="button" id="downloadNotebook"><span>Export .txt</span></button><button class="button" id="copyNotebook"><span>Copy</span></button></div></div>
+          <div class="mini-panel"><div class="label">02 / TIMER</div><h3>Research focus timer</h3><div class="timer-display" id="focusTimer">25:00</div><div class="mini-actions"><button class="button" data-timer="900"><span>15m</span></button><button class="button" data-timer="1500"><span>25m</span></button><button class="button" data-timer="2700"><span>45m</span></button><button class="button" data-timer="3600"><span>60m</span></button><button class="button primary" id="timerStart"><span>Start</span></button><button class="button" id="timerReset"><span>Reset</span></button></div></div>
+          <div class="mini-panel"><div class="label">03 / QUEUE</div><h3>Reading queue</h3><p>Add any scientific resource to your local reading queue.</p><div class="science-toolbar"><input class="search-field" id="queueTitle" placeholder="Paper / topic title"><button class="button" id="queueAdd"><span>Add</span></button></div><div id="readingQueue" style="margin-top:8px"></div></div>
+          <div class="mini-panel"><div class="label">04 / SETTINGS</div><h3>Study interface</h3><p>These settings are stored locally and do not alter your existing content.</p><div class="mini-actions"><button class="button" id="fontDown"><span>A−</span></button><button class="button" id="fontUp"><span>A+</span></button><button class="button" id="contrastToggle"><span>Contrast</span></button><button class="button" id="dyslexiaToggle"><span>Readable font</span></button><button class="button" id="printPage"><span>Print</span></button></div></div>
+          <div class="mini-panel"><div class="label">05 / RANDOM</div><h3>Research roulette</h3><p>Jump to a random article or scientific resource when you do not know what to study next.</p><div class="mini-actions"><button class="button primary" id="randomArticle"><span>Random note</span><span>↗</span></button><button class="button" id="randomScience"><span>Random source</span><span>↗</span></button></div></div>
+          <div class="mini-panel"><div class="label">06 / FAVORITES</div><h3>Saved sources</h3><p>Bookmark external scientific resources for one-click access.</p><div class="mini-actions"><button class="button" id="saveCurrentPage"><span>Save this page</span></button></div><div class="favorites" id="favoritesList"></div></div>
+        </div>
+      </div>
+    </section>
+
+
+<!-- Research identity layer: claims are deliberately methodological, not fabricated credentials. -->
+<section class="container reveal" id="research-profile" style="padding-top:0">
+  <div class="research-credibility">
+    <div class="cred-cell"><strong>01</strong><span>Evidence-first thinking</span></div>
+    <div class="cred-cell"><strong>02</strong><span>Primary-source orientation</span></div>
+    <div class="cred-cell"><strong>03</strong><span>Uncertainty is explicit</span></div>
+    <div class="cred-cell"><strong>04</strong><span>Biology × computation</span></div>
+  </div>
+  <div class="evidence-panel">
+    <div class="evidence-head"><div><div class="label">RESEARCH PROTOCOL</div><h3>How information is evaluated.</h3><p>Separate observation, evidence, interpretation and speculation.</p></div><div class="evidence-score">HIGH RIGOR</div></div>
+    <div class="evidence-track"><div class="evidence-fill"></div></div>
+    <div class="method-grid">
+      <div class="method-item"><b>01 · SOURCE</b><p>Prefer peer-reviewed literature, institutional databases and primary research.</p></div>
+      <div class="method-item"><b>02 · CLAIM</b><p>Distinguish established findings from plausible interpretation.</p></div>
+      <div class="method-item"><b>03 · LIMIT</b><p>State uncertainty, missing evidence and alternative explanations.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="container reveal source-hub" id="science-network">
+  <div class="section-head"><div><div class="section-number">06 / scientific network</div><h2>Research Sources</h2></div><p class="section-description">A curated gateway to established scientific and biomedical literature platforms.</p></div>
+  <div class="source-grid">
+    <div class="source-card"><div><div class="source-name">PubMed</div><small>Biomedical and life-sciences literature search.</small></div><a href="https://pubmed.ncbi.nlm.nih.gov/" target="_blank" rel="noopener">OPEN DATABASE ↗</a></div>
+    <div class="source-card"><div><div class="source-name">NCBI</div><small>Genomics, genes, proteins, literature and biological databases.</small></div><a href="https://www.ncbi.nlm.nih.gov/" target="_blank" rel="noopener">OPEN NCBI ↗</a></div>
+    <div class="source-card"><div><div class="source-name">Nature</div><small>Peer-reviewed research across science and technology.</small></div><a href="https://www.nature.com/" target="_blank" rel="noopener">OPEN NATURE ↗</a></div>
+    <div class="source-card"><div><div class="source-name">NIH</div><small>Biomedical research, institutes, initiatives and resources.</small></div><a href="https://www.nih.gov/" target="_blank" rel="noopener">OPEN NIH ↗</a></div>
+    <div class="source-card"><div><div class="source-name">PLOS</div><small>Open-access scientific publishing and research.</small></div><a href="https://plos.org/" target="_blank" rel="noopener">OPEN PLOS ↗</a></div>
+    <div class="source-card"><div><div class="source-name">bioRxiv</div><small>Preprints for biological sciences; not equivalent to peer review.</small></div><a href="https://www.biorxiv.org/" target="_blank" rel="noopener">OPEN BIORXIV ↗</a></div>
+    <div class="source-card"><div><div class="source-name">arXiv</div><small>Open research repository spanning quantitative disciplines.</small></div><a href="https://arxiv.org/" target="_blank" rel="noopener">OPEN ARXIV ↗</a></div>
+    <div class="source-card"><div><div class="source-name">NASA Science</div><small>Official science resources covering space and planetary research.</small></div><a href="https://science.nasa.gov/" target="_blank" rel="noopener">OPEN NASA ↗</a></div>
+  </div>
+</section>
+
+<section class="container reveal" id="scientific-method" style="padding-top:80px">
+  <div class="section-head"><div><div class="section-number">07 / intellectual architecture</div><h2>Scientific Method</h2></div><p class="section-description">The visual language should communicate disciplined curiosity, not performative expertise.</p></div>
+  <div class="timeline">
+    <div class="timeline-item"><div class="year">01 · QUESTION</div><h4>What exactly are we trying to explain?</h4><p>Define the phenomenon before searching for an answer.</p></div>
+    <div class="timeline-item"><div class="year">02 · EVIDENCE</div><h4>What observations support the claim?</h4><p>Prioritize reproducible measurements and primary literature.</p></div>
+    <div class="timeline-item"><div class="year">03 · MODEL</div><h4>What mechanism could explain it?</h4><p>Connect molecular, cellular, neural and population-level processes.</p></div>
+    <div class="timeline-item"><div class="year">04 · FALSIFICATION</div><h4>What would prove the idea wrong?</h4><p>Actively search for counterexamples rather than confirmation alone.</p></div>
+    <div class="timeline-item"><div class="year">05 · UPDATE</div><h4>What changes when new evidence arrives?</h4><p>A scientific position remains revisable when better evidence appears.</p></div>
+  </div>
+</section>
+
+<div class="science-console" aria-label="Scientific quick tools">
+  <div class="console-menu" id="scienceConsoleMenu">
+    <button data-console="sources">Open scientific sources</button>
+    <button data-console="method">Jump to scientific method</button>
+    <button data-console="research">Jump to research</button>
+    <button data-console="top">Return to top</button>
+  </div>
+  <button class="console-toggle" id="scienceConsoleToggle" aria-label="Scientific quick tools" title="Scientific quick tools">Σ</button>
+</div>
+
     <section id="about">
       <div class="container reveal">
         <div class="section-head">
-          <div><div class="section-number">about</div><h2>Why this exists?</h2></div>
+          <div><div class="section-number">05 / about</div><h2>Why this exists.</h2></div>
           <p class="section-description">This is not intended to be a conventional portfolio. It is a small digital space for things I am learning, building, reading and thinking about.</p>
         </div>
       </div>
     </section>
   </main>
+
+
+
+  <div class="utility-panel" id="commandPalette" aria-hidden="true">
+    <div class="command-box" role="dialog" aria-modal="true" aria-label="Command palette">
+      <input class="command-input" id="commandInput" autocomplete="off" placeholder="Search notes, sections, or commands..." />
+      <div class="command-list" id="commandList"></div>
+      <div class="shortcut-help" style="padding:0 14px 12px">↑ ↓ navigate · Enter select · Esc close</div>
+    </div>
+  </div>
+
+  <div class="article-modal" id="articleModal" aria-hidden="true">
+    <article class="article-reader">
+      <div class="reader-top">
+        <div><div class="label" id="readerLabel">RESEARCH NOTE</div><h2 id="readerTitle" style="margin-top:8px">Research note</h2></div>
+        <button class="icon-btn reader-close" id="readerClose" aria-label="Close article">×</button>
+      </div>
+      <div class="reader-content" id="readerContent"></div>
+    </article>
+  </div>
 
   <footer class="container">
     <span>curiosity / evidence / uncertainty</span>
@@ -504,7 +946,93 @@
   </footer>
 
   <button class="back-top" id="backTop" aria-label="Back to top">↑</button>
+
+  <!-- V2 utility controls: each feature is independent and uses only local browser storage. -->
+  <div class="ayx-tools" aria-label="Extra tools">
+    <button class="ayx-tool" id="ayxStatsBtn" title="Live dashboard" aria-label="Live dashboard">◫</button>
+    <button class="ayx-tool" id="ayxNoteBtn" title="Quick notebook" aria-label="Quick notebook">✎</button>
+    <button class="ayx-tool" id="ayxTimerBtn" title="Focus timer" aria-label="Focus timer">◷</button>
+    <button class="ayx-tool" id="ayxRandomBtn" title="Random research note" aria-label="Random research note">⤨</button>
+    <button class="ayx-tool" id="ayxHelpBtn" title="Keyboard shortcuts" aria-label="Keyboard shortcuts">?</button>
+  </div>
+
+  <div class="ayx-overlay" id="ayxStats" aria-hidden="true">
+    <div class="ayx-panel" role="dialog" aria-modal="true" aria-label="Live dashboard">
+      <div class="ayx-panel-head">
+        <div><div class="label">SYSTEM / DASHBOARD</div><h3>Live workspace</h3></div>
+        <button class="icon-btn" data-ayx-close="ayxStats" aria-label="Close">×</button>
+      </div>
+      <div class="ayx-grid">
+        <div class="ayx-box"><strong id="ayxVisitCount">01</strong><small>visits on this browser</small></div>
+        <div class="ayx-box"><strong id="ayxSessionTime">00:00</strong><small>current session</small></div>
+        <div class="ayx-box"><strong id="ayxReadProgress">0%</strong><small>page progress</small></div>
+        <div class="ayx-box"><strong id="ayxSavedCount">0</strong><small>saved notes</small></div>
+      </div>
+      <div class="ayx-actions">
+        <button class="button" id="ayxExport"><span>Export notebook</span> <span>↓</span></button>
+        <button class="button" id="ayxShare"><span>Share page</span> <span>↗</span></button>
+        <button class="button" id="ayxReset"><span>Reset local data</span></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="ayx-overlay" id="ayxNotebook" aria-hidden="true">
+    <div class="ayx-panel" role="dialog" aria-modal="true" aria-label="Quick notebook">
+      <div class="ayx-panel-head">
+        <div><div class="label">LOCAL / NOTEBOOK</div><h3>Quick notes</h3></div>
+        <button class="icon-btn" data-ayx-close="ayxNotebook" aria-label="Close">×</button>
+      </div>
+      <textarea class="ayx-note-input" id="ayxNoteInput" placeholder="Write an idea, question, hypothesis or reminder..."></textarea>
+      <div class="ayx-actions">
+        <button class="button primary" id="ayxSaveNote"><span>Save locally</span></button>
+        <button class="button" id="ayxClearNote"><span>Clear</span></button>
+      </div>
+      <div class="ayx-list" id="ayxNotesList"></div>
+    </div>
+  </div>
+
+  <div class="ayx-overlay" id="ayxTimer" aria-hidden="true">
+    <div class="ayx-panel" role="dialog" aria-modal="true" aria-label="Focus timer">
+      <div class="ayx-panel-head">
+        <div><div class="label">FOCUS / TIMER</div><h3>Deep-work session</h3></div>
+        <button class="icon-btn" data-ayx-close="ayxTimer" aria-label="Close">×</button>
+      </div>
+      <div class="ayx-timer">
+        <div class="ayx-clock" id="ayxClock">25:00</div>
+        <div class="ayx-progress"><i id="ayxTimerProgress"></i></div>
+        <div class="ayx-actions" style="justify-content:center">
+          <button class="button primary" id="ayxTimerToggle"><span>Start</span></button>
+          <button class="button" id="ayxTimerReset"><span>Reset</span></button>
+        </div>
+      </div>
+      <div class="tags" style="margin-top:12px">
+        <button class="tag" data-ayx-min="15">15 min</button>
+        <button class="tag" data-ayx-min="25">25 min</button>
+        <button class="tag" data-ayx-min="45">45 min</button>
+        <button class="tag" data-ayx-min="60">60 min</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="ayx-overlay" id="ayxHelp" aria-hidden="true">
+    <div class="ayx-panel" role="dialog" aria-modal="true" aria-label="Keyboard shortcuts">
+      <div class="ayx-panel-head">
+        <div><div class="label">CONTROL / SHORTCUTS</div><h3>Keyboard layer</h3></div>
+        <button class="icon-btn" data-ayx-close="ayxHelp" aria-label="Close">×</button>
+      </div>
+      <div class="ayx-kbd-grid">
+        <div class="ayx-kbd-row"><span>Command palette</span><kbd>Ctrl / ⌘ + K</kbd></div>
+        <div class="ayx-kbd-row"><span>Focus mode</span><kbd>F</kbd></div>
+        <div class="ayx-kbd-row"><span>Quick notebook</span><kbd>N</kbd></div>
+        <div class="ayx-kbd-row"><span>Focus timer</span><kbd>T</kbd></div>
+        <div class="ayx-kbd-row"><span>Random note</span><kbd>R</kbd></div>
+        <div class="ayx-kbd-row"><span>Close overlay</span><kbd>Esc</kbd></div>
+      </div>
+    </div>
+  </div>
+
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="offline-badge" id="offlineBadge">OFFLINE MODE</div>
 
   <script>
     (() => {
@@ -560,7 +1088,7 @@
 
       /* Active section */
       const sectionLinks = $$("[data-section]");
-      const sections = ["overview","research","lab","about"]
+      const sections = ["overview","research","lab","science","tools","about"]
         .map(id => document.getElementById(id))
         .filter(Boolean);
 
@@ -663,7 +1191,376 @@
 
       /* Keep browser from jumping to missing anchors */
       $$('a[href="#"]').forEach(link => link.addEventListener("click", event => event.preventDefault()));
+
+      /* Command palette */
+      const palette = $("#commandPalette");
+      const commandInput = $("#commandInput");
+      const commandList = $("#commandList");
+      const commands = [
+        {label:"Go to overview", key:"overview", action:()=>$("#overview")?.scrollIntoView({behavior: reducedMotion ? "auto" : "smooth"})},
+        {label:"Go to research", key:"research", action:()=>$("#research")?.scrollIntoView({behavior: reducedMotion ? "auto" : "smooth"})},
+        {label:"Open text lab", key:"lab", action:()=>$("#lab")?.scrollIntoView({behavior: reducedMotion ? "auto" : "smooth"})},
+        {label:"Go to about", key:"about", action:()=>$("#about")?.scrollIntoView({behavior: reducedMotion ? "auto" : "smooth"})},
+        {label:"Toggle theme", key:"theme", action:()=>toggleTheme()},
+        {label:"Focus mode", key:"focus", action:()=>toggleFocus()},
+        {label:"Back to top", key:"top", action:()=>window.scrollTo({top:0,behavior:reducedMotion?"auto":"smooth"})}
+      ];
+      let selectedCommand=0;
+      function renderCommands(filter=""){
+        const q=filter.toLowerCase().trim();
+        const items=commands.filter(c=>c.label.toLowerCase().includes(q)||c.key.includes(q));
+        commandList.innerHTML=items.length ? items.map((c,i)=>`<button class="command-item ${i===selectedCommand?"selected":""}" data-command="${commands.indexOf(c)}"><span>${c.label}</span><kbd>${c.key}</kbd></button>`).join("") : '<div class="command-item">No command found.</div>';
+        $$(".command-item[data-command]",commandList).forEach(btn=>btn.addEventListener("click",()=>runCommand(Number(btn.dataset.command))));
+      }
+      function openPalette(){
+        palette.classList.add("open"); palette.setAttribute("aria-hidden","false"); commandInput.value=""; selectedCommand=0; renderCommands(); setTimeout(()=>commandInput.focus(),20);
+      }
+      function closePalette(){palette.classList.remove("open");palette.setAttribute("aria-hidden","true");}
+      function runCommand(index){commands[index]?.action();closePalette();}
+      $("#searchButton").addEventListener("click",openPalette);
+      palette.addEventListener("click",e=>{if(e.target===palette)closePalette()});
+      commandInput.addEventListener("input",()=>{selectedCommand=0;renderCommands(commandInput.value)});
+      commandInput.addEventListener("keydown",e=>{
+        const items=$$(".command-item[data-command]",commandList);
+        if(e.key==="Escape"){e.preventDefault();closePalette()}
+        if(e.key==="ArrowDown"){e.preventDefault();selectedCommand=Math.min(selectedCommand+1,Math.max(0,items.length-1));renderCommands(commandInput.value)}
+        if(e.key==="ArrowUp"){e.preventDefault();selectedCommand=Math.max(selectedCommand-1,0);renderCommands(commandInput.value)}
+        if(e.key==="Enter" && items[selectedCommand]){e.preventDefault();runCommand(Number(items[selectedCommand].dataset.command))}
+      });
+
+      /* Keyboard shortcuts */
+      document.addEventListener("keydown",e=>{
+        if((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==="k"){e.preventDefault();openPalette()}
+        if(e.key==="?" && !["INPUT","TEXTAREA"].includes(document.activeElement.tagName)){openPalette()}
+      });
+
+      /* Theme system — green is the default; purple is an optional theme */
+      const THEME_KEY = "ay-theme-v6";
+      const THEME_CLASSES = ["theme-purple","theme-green","theme-blue","theme-cyan","theme-red","theme-amber","theme-ice","theme-rose","theme-violet","theme-light"];
+      const THEME_NAMES = {
+        green:"Research Green", purple:"Purple Black Neon", blue:"Electric Blue", cyan:"Cyan Lab",
+        red:"Crimson", amber:"Amber", ice:"Ice", rose:"Rose Neon", violet:"Deep Violet", light:"Scientific Light"
+      };
+
+      function applyTheme(theme, persist=true){
+        if(!THEME_NAMES[theme]) theme="green";
+        const root=document.documentElement;
+        THEME_CLASSES.forEach(cls=>root.classList.remove(cls));
+        root.classList.add(`theme-${theme}`);
+        const desktopSelect=$("#themeSelect");
+        const mobileSelect=$("#mobileThemeSelect");
+        if(desktopSelect) desktopSelect.value=theme;
+        if(mobileSelect) mobileSelect.value=theme;
+        const button=$("#themeButton");
+        if(button){
+          button.textContent=theme==="light"?"☾":"◐";
+          button.title=`Theme: ${THEME_NAMES[theme]} — click to reset to Research Green`;
+          button.setAttribute("aria-label",`Current theme: ${THEME_NAMES[theme]}`);
+        }
+        if(persist) localStorage.setItem(THEME_KEY,theme);
+      }
+
+      function chooseTheme(theme){
+        applyTheme(theme,true);
+        showToast(`${THEME_NAMES[theme] || "Theme"} enabled.`);
+      }
+
+      /* Fresh V6 default: never inherit the broken V5 theme state */
+      const savedTheme=localStorage.getItem(THEME_KEY);
+      applyTheme(THEME_NAMES[savedTheme] ? savedTheme : "green", false);
+      if(!THEME_NAMES[savedTheme]) localStorage.setItem(THEME_KEY,"green");
+
+      $("#themeSelect")?.addEventListener("change",e=>chooseTheme(e.target.value));
+      $("#mobileThemeSelect")?.addEventListener("change",e=>chooseTheme(e.target.value));
+      $("#themeButton")?.addEventListener("click",()=>{ applyTheme("green",true); showToast("Research Green restored."); });
+
+      /* Focus mode */
+      function toggleFocus(){
+        document.body.classList.toggle("focus-mode");
+        const active=document.body.classList.contains("focus-mode");
+        $("#focusButton").textContent=active?"◉":"◌";
+        showToast(active?"Focus mode enabled.":"Focus mode disabled.");
+      }
+      $("#focusButton").addEventListener("click",toggleFocus);
+
+      /* Research search/filter */
+      const articleSearch=$("#articleSearch"), emptyArticles=$("#emptyArticles");
+      function filterArticles(){
+        const q=articleSearch.value.trim().toLowerCase();
+        let visible=0;
+        $$(".article",$("#articleGrid")).forEach(card=>{
+          const match=!q || card.textContent.toLowerCase().includes(q);
+          card.classList.toggle("hidden",!match); if(match)visible++;
+        });
+        emptyArticles.classList.toggle("show",visible===0);
+      }
+      articleSearch.addEventListener("input",filterArticles);
+      $("#clearSearch").addEventListener("click",()=>{articleSearch.value="";filterArticles();articleSearch.focus()});
+
+      /* Research reader */
+      const notes={
+        "Natural Selection": {
+          label:"ARTICLE / 001",
+          html:"<h3>Natural Selection</h3><p>Natural selection describes differential survival and reproduction associated with heritable variation. When variants affect reproductive success, their frequencies can change across generations.</p><ul><li>Variation must exist in a population.</li><li>Some variation is heritable.</li><li>Reproductive success differs among variants.</li><li>Population-level frequencies can therefore shift over generations.</li></ul><p>This note is intentionally concise; replace it with a full article whenever you expand the knowledge base.</p>"
+        },
+        "Genetic Drift": {
+          label:"ARTICLE / 002",
+          html:"<h3>Genetic Drift</h3><p>Genetic drift is a change in allele frequencies caused by random sampling of individuals or gametes. Its effects are generally stronger in smaller populations.</p><ul><li>It is stochastic rather than adaptation-driven.</li><li>Rare alleles can disappear by chance.</li><li>Population bottlenecks and founder events can amplify its effects.</li></ul>"
+        },
+        "Evolution & Genetics": {
+          label:"ARTICLE / 003",
+          html:"<h3>Evolution &amp; Genetics</h3><p>Population genetics connects inheritance with evolutionary change. Mutation and recombination generate or reshuffle variation, while selection, drift, migration and mating patterns alter its distribution.</p><p>The useful unit of analysis is often the population: evolution can be described as change in allele frequencies across generations.</p>"
+        }
+      };
+      const modal=$("#articleModal"), readerTitle=$("#readerTitle"), readerLabel=$("#readerLabel"), readerContent=$("#readerContent");
+      function openReader(name){
+        const note=notes[name]; if(!note)return;
+        readerTitle.textContent=name; readerLabel.textContent=note.label; readerContent.innerHTML=note.html;
+        modal.classList.add("open");modal.setAttribute("aria-hidden","false");document.body.style.overflow="hidden";
+      }
+      function closeReader(){modal.classList.remove("open");modal.setAttribute("aria-hidden","true");document.body.style.overflow="";}
+      $$(".article-link").forEach(link=>link.addEventListener("click",e=>{e.preventDefault();openReader(link.dataset.article)}));
+      $("#readerClose").addEventListener("click",closeReader);
+      modal.addEventListener("click",e=>{if(e.target===modal)closeReader()});
+      document.addEventListener("keydown",e=>{if(e.key==="Escape")closeReader()});
+
+      /* Session metrics */
+      const sessionStart=Date.now();
+      const visits=Number(localStorage.getItem("ay-visits")||0)+1;
+      localStorage.setItem("ay-visits",String(visits));
+      if($("#visitCount")) $("#visitCount").textContent=String(visits).padStart(2,"0");
+      setInterval(()=>{
+        const sec=Math.floor((Date.now()-sessionStart)/1000), m=Math.floor(sec/60), ss=sec%60;
+        if($("#sessionTime")) $("#sessionTime").textContent=`${String(m).padStart(2,"0")}:${String(ss).padStart(2,"0")}`;
+      },1000);
+
+
+      /* === V2 features: isolated, defensive, local-only === */
+      const ayx = (id) => document.getElementById(id);
+      const ayxOpen = (id) => {
+        const el=ayx(id); if(!el)return;
+        el.classList.add("open"); el.setAttribute("aria-hidden","false");
+      };
+      const ayxClose = (id) => {
+        const el=ayx(id); if(!el)return;
+        el.classList.remove("open"); el.setAttribute("aria-hidden","true");
+      };
+      $$(".ayx-overlay").forEach(overlay=>{
+        overlay.addEventListener("click",e=>{if(e.target===overlay)ayxClose(overlay.id)});
+      });
+      $$("[data-ayx-close]").forEach(btn=>btn.addEventListener("click",()=>ayxClose(btn.dataset.ayxClose)));
+
+      /* 1 — Live dashboard */
+      const sessionStartV2=Date.now();
+      let visitCountV2=Number(localStorage.getItem("ay-visits")||0);
+      ayx("ayxVisitCount").textContent=String(visitCountV2).padStart(2,"0");
+      function updateV2Stats(){
+        const sec=Math.floor((Date.now()-sessionStartV2)/1000);
+        ayx("ayxSessionTime").textContent=`${String(Math.floor(sec/60)).padStart(2,"0")}:${String(sec%60).padStart(2,"0")}`;
+        const max=document.documentElement.scrollHeight-window.innerHeight;
+        const pct=max>0?Math.round((window.scrollY/max)*100):0;
+        ayx("ayxReadProgress").textContent=`${Math.min(100,pct)}%`;
+        try{ayx("ayxSavedCount").textContent=JSON.parse(localStorage.getItem("ayx-notes")||"[]").length}catch{}
+      }
+      setInterval(updateV2Stats,1000); updateV2Stats();
+      ayx("ayxStatsBtn").addEventListener("click",()=>{updateV2Stats();ayxOpen("ayxStats")});
+
+      /* 2 — Local notebook + 3 — export */
+      const noteInput=ayx("ayxNoteInput"), notesList=ayx("ayxNotesList");
+      const getNotes=()=>{try{return JSON.parse(localStorage.getItem("ayx-notes")||"[]")}catch{return[]}};
+      const setNotes=(x)=>localStorage.setItem("ayx-notes",JSON.stringify(x.slice(0,100)));
+      function renderNotes(){
+        const notes=getNotes();
+        notesList.innerHTML=notes.length?notes.map((n,i)=>`<button type="button" data-note-index="${i}"><strong>${escapeHTML(n.text.slice(0,80))}</strong><br><small>${new Date(n.time).toLocaleString()}</small></button>`).join("")
+          :'<div class="ayx-box"><small>No local notes yet.</small></div>';
+        $$("[data-note-index]",notesList).forEach(b=>b.addEventListener("click",()=>{noteInput.value=getNotes()[Number(b.dataset.noteIndex)]?.text||""}));
+        updateV2Stats();
+      }
+      function escapeHTML(text){return String(text).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+      ayx("ayxNoteBtn").addEventListener("click",()=>{renderNotes();ayxOpen("ayxNotebook");setTimeout(()=>noteInput.focus(),30)});
+      ayx("ayxSaveNote").addEventListener("click",()=>{
+        const text=noteInput.value.trim(); if(!text){showToast("Write something first.");return}
+        const notes=getNotes(); notes.unshift({text,time:Date.now()}); setNotes(notes); noteInput.value=""; renderNotes(); showToast("Saved locally.");
+      });
+      ayx("ayxClearNote").addEventListener("click",()=>{noteInput.value="";noteInput.focus()});
+      ayx("ayxExport").addEventListener("click",()=>{
+        const blob=new Blob([JSON.stringify({exportedAt:new Date().toISOString(),notes:getNotes()},null,2)],{type:"application/json"});
+        const url=URL.createObjectURL(blob), a=document.createElement("a"); a.href=url;a.download="amiryasin-notebook.json";a.click();URL.revokeObjectURL(url);showToast("Notebook exported.");
+      });
+
+      /* 4 — Native share with clipboard fallback */
+      ayx("ayxShare").addEventListener("click",async()=>{
+        try{
+          if(navigator.share) await navigator.share({title:document.title,text:"Amiryasin Hosseini — Personal Knowledge Space",url:location.href});
+          else {await navigator.clipboard.writeText(location.href);showToast("Page link copied.");}
+        }catch(e){if(e?.name!=="AbortError")showToast("Sharing is unavailable here.")}
+      });
+
+      /* 5 — Local-data reset, explicit confirmation */
+      ayx("ayxReset").addEventListener("click",()=>{
+        if(!confirm("Reset saved theme, notebook and visit data on this browser?"))return;
+        ["ay-theme","ay-theme-v6","ay-visits","ayx-notes"].forEach(k=>localStorage.removeItem(k)); location.reload();
+      });
+
+      /* 6 — Pomodoro-style focus timer */
+      let timerTotal=25*60,timerLeft=timerTotal,timerRunning=false,timerId=null;
+      function renderTimer(){
+        const m=Math.floor(timerLeft/60),s=timerLeft%60;
+        ayx("ayxClock").textContent=`${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+        ayx("ayxTimerProgress").style.width=`${timerTotal?((timerTotal-timerLeft)/timerTotal)*100:0}%`;
+        ayx("ayxTimerToggle").innerHTML=`<span>${timerRunning?"Pause":"Start"}</span>`;
+      }
+      function stopTimer(){clearInterval(timerId);timerId=null;timerRunning=false;renderTimer()}
+      function tickTimer(){
+        if(timerLeft<=0){stopTimer();showToast("Focus session complete.");return}
+        timerLeft--;renderTimer();
+      }
+      ayx("ayxTimerBtn").addEventListener("click",()=>{ayxOpen("ayxTimer");renderTimer()});
+      ayx("ayxTimerToggle").addEventListener("click",()=>{
+        if(timerRunning)stopTimer();
+        else{timerRunning=true;timerId=setInterval(tickTimer,1000);renderTimer()}
+      });
+      ayx("ayxTimerReset").addEventListener("click",()=>{stopTimer();timerLeft=timerTotal;renderTimer()});
+      $$("[data-ayx-min]").forEach(b=>b.addEventListener("click",()=>{
+        timerTotal=Number(b.dataset.ayxMin)*60;timerLeft=timerTotal;stopTimer();renderTimer();showToast(`${b.dataset.ayxMin}-minute timer selected.`);
+      }));
+      renderTimer();
+
+      /* 7 — Random research note */
+      ayx("ayxRandomBtn").addEventListener("click",()=>{
+        const links=$$(".article-link"), link=links[Math.floor(Math.random()*links.length)];
+        if(link){link.click();showToast("Random research note opened.")}
+      });
+
+      /* 8 — Reader font-size control via CSS variable */
+      const savedFont=Number(localStorage.getItem("ayx-font-size")||100);
+      document.documentElement.style.setProperty("--ayx-font-scale",`${savedFont}%`);
+      document.body.style.fontSize=`${savedFont}%`;
+      const fontRange=document.createElement("input");
+      fontRange.type="range";fontRange.min="85";fontRange.max="120";fontRange.value=String(savedFont);
+      fontRange.className="ayx-range";fontRange.setAttribute("aria-label","Interface scale");
+      const fontBox=document.createElement("div");fontBox.className="ayx-box";fontBox.style.marginTop="18px";
+      fontBox.innerHTML='<small>Interface scale</small>';fontBox.appendChild(fontRange);
+      ayx("ayxStats").querySelector(".ayx-panel").appendChild(fontBox);
+      fontRange.addEventListener("input",()=>{document.body.style.fontSize=`${fontRange.value}%`;localStorage.setItem("ayx-font-size",fontRange.value)});
+
+      /* 9 — Keyboard shortcut layer */
+      ayx("ayxHelpBtn").addEventListener("click",()=>ayxOpen("ayxHelp"));
+      document.addEventListener("keydown",e=>{
+        if(["INPUT","TEXTAREA","SELECT"].includes(document.activeElement?.tagName))return;
+        const k=e.key.toLowerCase();
+        if(k==="f"){e.preventDefault();toggleFocus()}
+        if(k==="n"){e.preventDefault();ayx("ayxNoteBtn").click()}
+        if(k==="t"){e.preventDefault();ayx("ayxTimerBtn").click()}
+        if(k==="r"){e.preventDefault();ayx("ayxRandomBtn").click()}
+      });
+
+      /* 10 — Persist last reading position and restore it safely */
+      const savedScroll=Number(sessionStorage.getItem("ayx-scroll")||0);
+      if(savedScroll>100) window.setTimeout(()=>window.scrollTo({top:savedScroll,behavior:"auto"}),120);
+      let scrollSaveTimer;
+      window.addEventListener("scroll",()=>{
+        clearTimeout(scrollSaveTimer);
+        scrollSaveTimer=setTimeout(()=>sessionStorage.setItem("ayx-scroll",String(window.scrollY||0)),250);
+      },{passive:true});
+
+      /* Defensive compatibility: the original metrics block expects optional IDs. */
+      const legacyVisit=ayx("visitCount"), legacySession=ayx("sessionTime"), legacyProgress=ayx("readProgress");
+      if(!legacyVisit) { /* no-op: the V2 dashboard is the visible metrics surface */ }
+      if(!legacySession) { /* no-op */ }
+      if(!legacyProgress) { /* no-op */ }
+
+      /* Reading progress */
+      function updateReading(){
+        const max=document.documentElement.scrollHeight-window.innerHeight;
+        const pct=max>0?Math.round((window.scrollY/max)*100):0;
+        $("#readingBar").style.width=`${pct}%`;
+        if($("#readProgress")) $("#readProgress").textContent=`${Math.min(100,pct)}%`;
+      }
+      window.addEventListener("scroll",updateReading,{passive:true}); updateReading();
+
+
+      /* Network status indicator */
+      const offlineBadge=$("#offlineBadge"); function networkState(){offlineBadge?.classList.toggle("show",!navigator.onLine);} window.addEventListener("online",networkState); window.addEventListener("offline",networkState); networkState();
+
+      /* === Scientific + productivity extension === */
+      const scienceLinks = $$(".science-link");
+      const scienceSearch = $("#scienceSearch");
+      const scienceClear = $("#scienceClear");
+      function filterScience(){
+        const q=(scienceSearch.value||"").trim().toLowerCase(); let n=0;
+        scienceLinks.forEach(card=>{const ok=!q||`${card.textContent} ${card.dataset.science||""}`.toLowerCase().includes(q);card.style.display=ok?"flex":"none";if(ok)n++;});
+      }
+      scienceSearch?.addEventListener("input",filterScience);
+      scienceClear?.addEventListener("click",()=>{scienceSearch.value="";filterScience();scienceSearch.focus()});
+
+      /* 01-03 Notebook: autosave, copy, export */
+      const notebook=$("#researchNotebook");
+      if(notebook){notebook.value=localStorage.getItem("ay-research-notebook")||"";notebook.addEventListener("input",()=>localStorage.setItem("ay-research-notebook",notebook.value));}
+      $("#clearNotebook")?.addEventListener("click",()=>{if(confirm("Clear the local research notebook?")){notebook.value="";localStorage.removeItem("ay-research-notebook");showToast("Notebook cleared.");}});
+      $("#copyNotebook")?.addEventListener("click",async()=>{try{await navigator.clipboard.writeText(notebook.value);showToast("Notebook copied.")}catch{showToast("Clipboard unavailable.")}});
+      $("#downloadNotebook")?.addEventListener("click",()=>{const blob=new Blob([notebook.value||""],{type:"text/plain;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="amiryasin-research-notes.txt";a.click();setTimeout(()=>URL.revokeObjectURL(url),500);showToast("Notebook exported.");});
+
+      /* 04-07 Focus timer */
+      let timerSeconds=1500,timerHandle=null;
+      const timerDisplay=$("#focusTimer"),timerStart=$("#timerStart");
+      function paintTimer(){const m=Math.floor(timerSeconds/60),s=timerSeconds%60;if(timerDisplay)timerDisplay.textContent=`${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;}
+      $$('[data-timer]').forEach(b=>b.addEventListener('click',()=>{clearInterval(timerHandle);timerHandle=null;timerSeconds=Number(b.dataset.timer);timerStart.querySelector('span').textContent='Start';paintTimer();}));
+      timerStart?.addEventListener('click',()=>{if(timerHandle){clearInterval(timerHandle);timerHandle=null;timerStart.querySelector('span').textContent='Start';return} timerStart.querySelector('span').textContent='Pause';timerHandle=setInterval(()=>{if(timerSeconds<=0){clearInterval(timerHandle);timerHandle=null;timerStart.querySelector('span').textContent='Start';showToast('Focus session complete.');return}timerSeconds--;paintTimer()},1000);});
+      $("#timerReset")?.addEventListener("click",()=>{clearInterval(timerHandle);timerHandle=null;timerSeconds=1500;timerStart.querySelector('span').textContent='Start';paintTimer();}); paintTimer();
+
+      /* 08-10 Reading queue */
+      const queueKey="ay-reading-queue";
+      let queue=JSON.parse(localStorage.getItem(queueKey)||"[]");
+      const queueBox=$("#readingQueue");
+      function renderQueue(){if(!queueBox)return;queueBox.innerHTML=queue.length?queue.map((x,i)=>`<div class="queue-item"><span>${escapeHtml(x)}</span><button class="icon-btn" data-remove-queue="${i}" aria-label="Remove">×</button></div>`).join(""):"<div class='queue-empty'>Queue is empty.</div>";$$('[data-remove-queue]',queueBox).forEach(b=>b.addEventListener('click',()=>{queue.splice(Number(b.dataset.removeQueue),1);localStorage.setItem(queueKey,JSON.stringify(queue));renderQueue();}));}
+      function escapeHtml(v){return String(v).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
+      $("#queueAdd")?.addEventListener("click",()=>{const input=$("#queueTitle"),v=input.value.trim();if(!v)return;queue.unshift(v);queue=queue.slice(0,30);localStorage.setItem(queueKey,JSON.stringify(queue));input.value="";renderQueue();showToast("Added to reading queue.");}); renderQueue();
+
+      /* 11-14 Interface controls */
+      let scale=Number(localStorage.getItem("ay-scale")||1); function applyScale(){document.documentElement.style.fontSize=`${16*scale}px`;localStorage.setItem("ay-scale",String(scale));}
+      $("#fontDown")?.addEventListener("click",()=>{scale=Math.max(.85,Math.round((scale-.05)*100)/100);applyScale();});
+      $("#fontUp")?.addEventListener("click",()=>{scale=Math.min(1.2,Math.round((scale+.05)*100)/100);applyScale();}); applyScale();
+      $("#contrastToggle")?.addEventListener("click",()=>{document.documentElement.classList.toggle('contrast-mode');localStorage.setItem('ay-contrast',document.documentElement.classList.contains('contrast-mode')?'1':'0');}); if(localStorage.getItem('ay-contrast')==='1')document.documentElement.classList.add('contrast-mode');
+      $("#dyslexiaToggle")?.addEventListener("click",()=>{document.documentElement.classList.toggle('dyslexia-mode');localStorage.setItem('ay-dyslexia',document.documentElement.classList.contains('dyslexia-mode')?'1':'0');}); if(localStorage.getItem('ay-dyslexia')==='1')document.documentElement.classList.add('dyslexia-mode');
+      $("#printPage")?.addEventListener("click",()=>window.print());
+
+      /* 15-16 Random discovery */
+      $("#randomArticle")?.addEventListener("click",()=>{const names=Object.keys(notes);openReader(names[Math.floor(Math.random()*names.length)]);});
+      $("#randomScience")?.addEventListener("click",()=>{const links=scienceLinks.filter(x=>x.style.display!=="none");if(!links.length)return;links[Math.floor(Math.random()*links.length)].click();});
+
+      /* 17-18 Favorites */
+      const favKey="ay-favorites"; let favorites=JSON.parse(localStorage.getItem(favKey)||"[]"); const favBox=$("#favoritesList");
+      function renderFavorites(){if(!favBox)return;favBox.innerHTML=favorites.length?favorites.map((f,i)=>`<span class="favorite-pill" data-fav="${i}">${escapeHtml(f.title)}</span>`).join(""):"<span class='queue-empty'>No saved sources yet.</span>";$$('[data-fav]',favBox).forEach(b=>b.addEventListener('click',()=>window.open(favorites[Number(b.dataset.fav)].url,'_blank','noopener,noreferrer')));}
+      $("#saveCurrentPage")?.addEventListener("click",()=>{const item={title:document.title,url:location.href};if(!favorites.some(x=>x.url===item.url)){favorites.unshift(item);favorites=favorites.slice(0,20);localStorage.setItem(favKey,JSON.stringify(favorites));renderFavorites();showToast('Page saved.')}else showToast('Already saved.');}); renderFavorites();
+
+      /* 19-20 Daily concept + share */
+      const concepts=["Natural selection changes populations across generations through differential reproductive success.","Genetic drift is stochastic and is often stronger in small populations.","Mutation creates new sequence variants; recombination reshuffles existing variants.","A scientific claim is stronger when its evidence is independently reproducible.","Correlation alone does not establish causation.","A hypothesis should make predictions that could, in principle, be tested and falsified."];
+      const dailyKey="ay-daily-concept",today=new Date().toISOString().slice(0,10),dailyIndex=Number(localStorage.getItem(dailyKey)||0);if(localStorage.getItem('ay-daily-date')!==today){localStorage.setItem('ay-daily-date',today);localStorage.setItem(dailyKey,String((dailyIndex+1)%concepts.length));}
+      const dailyConcept=concepts[Number(localStorage.getItem(dailyKey)||0)]; if(dailyConcept) showToast(`Daily concept: ${dailyConcept}`);
+
+      /* Extra safe navigation shortcuts */
+      document.addEventListener('keydown',e=>{if(['INPUT','TEXTAREA'].includes(document.activeElement?.tagName))return;const map={s:'#science',t:'#tools',r:'#research',l:'#lab'};if(map[e.key.toLowerCase()])$(map[e.key.toLowerCase()])?.scrollIntoView({behavior:reducedMotion?'auto':'smooth'});});
+
     })();
-  </script>
+  
+      /* Scientific prestige layer — self-contained and non-destructive */
+      (() => {
+        const toggle = document.getElementById("scienceConsoleToggle");
+        const menu = document.getElementById("scienceConsoleMenu");
+        if (!toggle || !menu) return;
+        toggle.addEventListener("click", () => menu.classList.toggle("open"));
+        document.addEventListener("click", e => {
+          if (!e.target.closest(".science-console")) menu.classList.remove("open");
+        });
+        menu.addEventListener("click", e => {
+          const action = e.target.dataset.console;
+          if (!action) return;
+          const targets = {sources:"science-network",method:"scientific-method",research:"research",top:"top"};
+          document.getElementById(targets[action])?.scrollIntoView({behavior: reducedMotion ? "auto" : "smooth"});
+          menu.classList.remove("open");
+        });
+      })();
+</script>
 </body>
 </html>
