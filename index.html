@@ -597,7 +597,158 @@
 @media(max-width:980px){.desktop-nav{display:none}.hamburger{display:grid}.theme-select{max-width:116px}.pro-menu{display:none}.mobile-pro{display:block;margin:10px 14px 14px;padding:12px;border:1px solid var(--border);border-radius:15px}.mobile-pro .theme-select{width:100%;max-width:none}.mobile-pro .pro-grid{margin-top:10px}}
 @media(max-width:640px){.header-actions{gap:5px}.header-actions .icon-btn{width:38px;height:38px}.theme-select-wrap{display:none}.mobile-menu{padding:12px}.mobile-menu a{min-height:46px;display:flex;align-items:center}.pro-grid{grid-template-columns:1fr 1fr}.pro-menu-panel{position:fixed;right:14px;top:70px}.hero{padding-top:96px}.container{width:min(100% - 28px,1180px)}.section-head{gap:18px}.card,.tool-panel{min-width:0;overflow:hidden}textarea,.search-field{font-size:16px}.button{min-height:44px}.article-reader{width:100%;max-height:84vh;padding:20px;border-radius:18px}.stat-row{grid-template-columns:1fr}.ayx-overlay{padding:12px}.ayx-modal{width:min(100%,680px);max-height:88vh;overflow:auto}.mobile-pro .pro-action{min-height:48px}}
 @media(prefers-reduced-motion:reduce){.pro-menu-panel{transition:none}.theme-purple .brand-dot{animation:none}}
+/* =========================================================
+   WORKSPACE ACCESS
+   ========================================================= */
 
+.account-access{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+
+  min-height:40px;
+  padding:0 13px;
+
+  border:1px solid var(--border-strong);
+  border-radius:12px;
+
+  background:rgba(168,240,194,.045);
+  color:var(--accent);
+
+  font:500 .68rem "DM Mono",monospace;
+  letter-spacing:.04em;
+
+  white-space:nowrap;
+  overflow:hidden;
+
+  transition:.28s var(--ease);
+}
+
+.account-access::before{
+  content:"";
+  position:absolute;
+  inset:0;
+
+  background:
+    linear-gradient(
+      105deg,
+      transparent 25%,
+      rgba(255,255,255,.13) 50%,
+      transparent 75%
+    );
+
+  transform:translateX(-120%);
+  transition:.55s;
+}
+
+.account-access:hover::before{
+  transform:translateX(120%);
+}
+
+.account-access:hover{
+  color:var(--accent);
+  border-color:var(--accent);
+  background:rgba(168,240,194,.08);
+  transform:translateY(-2px);
+  box-shadow:0 10px 30px rgba(168,240,194,.1);
+}
+
+.account-access span{
+  position:relative;
+  z-index:1;
+}
+
+
+/* Hero workspace button */
+
+.workspace-button{
+  position:relative;
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+
+  min-height:46px;
+  padding:11px 17px;
+
+  border:1px solid var(--border-strong);
+  border-radius:13px;
+
+  background:rgba(168,240,194,.045);
+  color:var(--accent);
+
+  font-size:.78rem;
+  font-weight:600;
+
+  overflow:hidden;
+
+  transition:.28s var(--ease);
+}
+
+.workspace-button:hover{
+  color:var(--accent);
+  border-color:var(--accent);
+  background:rgba(168,240,194,.09);
+  transform:translateY(-3px);
+  box-shadow:0 12px 35px rgba(168,240,194,.12);
+}
+
+.workspace-button span{
+  position:relative;
+  z-index:1;
+}
+
+
+/* Mobile account link */
+
+.mobile-account-access{
+  display:flex !important;
+  align-items:center;
+  justify-content:space-between;
+
+  margin:4px 6px 8px;
+  padding:13px 14px;
+
+  border:1px solid var(--border-strong);
+  border-radius:13px;
+
+  background:rgba(168,240,194,.045);
+
+  color:var(--accent) !important;
+
+  font:500 .68rem "DM Mono",monospace !important;
+
+  transition:.25s var(--ease);
+}
+
+.mobile-account-access:hover{
+  background:rgba(168,240,194,.09);
+  border-color:var(--accent);
+}
+
+.mobile-account-access small{
+  color:var(--muted);
+  font:400 .58rem "DM Mono",monospace;
+}
+
+
+@media(max-width:640px){
+
+  .account-access{
+    min-height:38px;
+    padding:0 9px;
+    font-size:.59rem;
+  }
+
+  .workspace-button{
+    flex:1;
+    min-width:145px;
+  }
+
+}
   </style>
 </head>
 
