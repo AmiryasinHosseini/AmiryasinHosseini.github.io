@@ -750,6 +750,34 @@
 
 }
   </style>
+  <style>
+.auth-nav-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 14px;
+  color: var(--text, #eaf7ff);
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 700;
+  border: 1px solid rgba(56, 189, 248, .35);
+  border-radius: 10px;
+  background: rgba(56, 189, 248, .08);
+  transition: .2s;
+}
+
+.auth-nav-button:hover {
+  border-color: rgba(56, 189, 248, .8);
+  background: rgba(56, 189, 248, .18);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 700px) {
+  .auth-nav-button span:last-child {
+    display: none;
+  }
+}
+</style>
 </head>
 
 <body>
@@ -774,6 +802,13 @@
       </nav>
 
       <div class="header-actions">
+        <a
+  href="auth.html"
+  class="auth-nav-button"
+  aria-label="Login or Sign Up">
+  <span class="auth-nav-icon">↗</span>
+  <span>Login / Sign Up</span>
+</a>
         <button class="icon-btn" id="searchButton" aria-label="Open command palette" title="Search / commands">⌕</button>
         <button class="icon-btn" id="themeButton" aria-label="Toggle theme" title="Toggle theme">◐</button>
         <button class="icon-btn" id="focusButton" aria-label="Toggle focus mode" title="Focus mode">◌</button>
