@@ -1,0 +1,1493 @@
+```html
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Access | AmirYasin</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+:root{
+    --bg:#050b14;
+    --panel:rgba(10,20,35,.78);
+    --border:rgba(80,180,255,.18);
+    --blue:#38bdf8;
+    --cyan:#22d3ee;
+    --text:#e6f4ff;
+    --muted:#7890a6;
+    --danger:#fb7185;
+    --success:#34d399;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+html,
+body{
+    margin:0;
+    min-height:100%;
+}
+
+body{
+
+    min-height:100vh;
+
+    font-family:
+        Inter,
+        Vazirmatn,
+        Tahoma,
+        Arial,
+        sans-serif;
+
+    color:var(--text);
+
+    background:
+
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(14,165,233,.13),
+            transparent 32%
+        ),
+
+        radial-gradient(
+            circle at 80% 70%,
+            rgba(34,211,238,.09),
+            transparent 30%
+        ),
+
+        linear-gradient(
+            135deg,
+            #030711,
+            #07111f 45%,
+            #030812
+        );
+
+    overflow-x:hidden;
+}
+
+
+/* =====================================
+   BACKGROUND
+===================================== */
+
+.background{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+}
+
+.grid{
+    position:absolute;
+    inset:-50%;
+
+    background-image:
+
+        linear-gradient(
+            rgba(56,189,248,.035) 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            90deg,
+            rgba(56,189,248,.035) 1px,
+            transparent 1px
+        );
+
+    background-size:55px 55px;
+
+    transform:
+        perspective(500px)
+        rotateX(55deg)
+        translateY(120px);
+
+    animation:
+        gridMove 18s linear infinite;
+}
+
+@keyframes gridMove{
+
+    from{
+        transform:
+            perspective(500px)
+            rotateX(55deg)
+            translateY(0);
+    }
+
+    to{
+        transform:
+            perspective(500px)
+            rotateX(55deg)
+            translateY(55px);
+    }
+
+}
+
+
+.orb{
+    position:absolute;
+
+    width:350px;
+    height:350px;
+
+    border-radius:50%;
+
+    filter:blur(80px);
+
+    opacity:.16;
+
+}
+
+.orb.one{
+    background:#0ea5e9;
+    top:-150px;
+    right:-100px;
+}
+
+.orb.two{
+    background:#06b6d4;
+    bottom:-180px;
+    left:-100px;
+}
+
+
+/* =====================================
+   LAYOUT
+===================================== */
+
+.page{
+
+    position:relative;
+
+    min-height:100vh;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:25px;
+
+}
+
+
+.auth-container{
+
+    width:100%;
+
+    max-width:460px;
+
+}
+
+
+/* =====================================
+   BRAND
+===================================== */
+
+.brand{
+
+    text-align:center;
+
+    margin-bottom:24px;
+
+}
+
+.logo{
+
+    width:64px;
+    height:64px;
+
+    margin:auto;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:18px;
+
+    border:1px solid
+        rgba(56,189,248,.3);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(56,189,248,.15),
+            rgba(8,47,73,.25)
+        );
+
+    box-shadow:
+
+        0 0 40px
+        rgba(56,189,248,.12),
+
+        inset 0 0 25px
+        rgba(56,189,248,.04);
+
+    font-size:28px;
+
+}
+
+.brand h1{
+
+    margin:15px 0 5px;
+
+    font-size:23px;
+
+    letter-spacing:.5px;
+
+}
+
+.brand p{
+
+    margin:0;
+
+    color:var(--muted);
+
+    font-size:13px;
+
+}
+
+
+/* =====================================
+   CARD
+===================================== */
+
+.card{
+
+    position:relative;
+
+    padding:30px;
+
+    border-radius:24px;
+
+    border:1px solid var(--border);
+
+    background:var(--panel);
+
+    backdrop-filter:blur(22px);
+
+    -webkit-backdrop-filter:blur(22px);
+
+    box-shadow:
+
+        0 30px 80px
+        rgba(0,0,0,.42),
+
+        inset 0 1px 0
+        rgba(255,255,255,.035);
+
+}
+
+
+.scan-line{
+
+    position:absolute;
+
+    top:0;
+    left:12%;
+    right:12%;
+
+    height:1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(56,189,248,.7),
+            transparent
+        );
+
+    box-shadow:
+        0 0 15px
+        rgba(56,189,248,.6);
+
+}
+
+
+/* =====================================
+   TABS
+===================================== */
+
+.tabs{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:5px;
+
+    padding:5px;
+
+    margin-bottom:25px;
+
+    border-radius:12px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    border:
+        1px solid
+        rgba(255,255,255,.04);
+
+}
+
+.tab{
+
+    border:0;
+
+    padding:11px;
+
+    border-radius:9px;
+
+    background:transparent;
+
+    color:#6f879c;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    font-size:14px;
+
+}
+
+.tab.active{
+
+    color:#eaf8ff;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(14,165,233,.18),
+            rgba(34,211,238,.07)
+        );
+
+    box-shadow:
+        inset 0 0 20px
+        rgba(56,189,248,.035);
+
+}
+
+
+/* =====================================
+   FORM
+===================================== */
+
+.form{
+
+    display:none;
+
+}
+
+.form.active{
+
+    display:block;
+
+}
+
+.form-title{
+
+    margin-bottom:22px;
+
+}
+
+.form-title h2{
+
+    margin:0 0 7px;
+
+    font-size:20px;
+
+}
+
+.form-title p{
+
+    margin:0;
+
+    color:var(--muted);
+
+    font-size:12px;
+
+}
+
+
+.field{
+
+    margin-bottom:16px;
+
+}
+
+.field label{
+
+    display:block;
+
+    margin-bottom:7px;
+
+    color:#a9c0d2;
+
+    font-size:12px;
+
+}
+
+.input-wrap{
+
+    position:relative;
+
+}
+
+.input-icon{
+
+    position:absolute;
+
+    right:14px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:#527087;
+
+    font-size:15px;
+
+}
+
+input{
+
+    width:100%;
+
+    padding:13px 42px 13px 13px;
+
+    border-radius:11px;
+
+    border:1px solid
+        rgba(100,160,190,.16);
+
+    background:
+        rgba(2,8,18,.65);
+
+    color:white;
+
+    outline:none;
+
+    transition:.25s;
+
+    font-size:13px;
+
+}
+
+input::placeholder{
+
+    color:#40576a;
+
+}
+
+input:focus{
+
+    border-color:
+        rgba(56,189,248,.55);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(56,189,248,.07);
+
+}
+
+
+/* =====================================
+   BUTTON
+===================================== */
+
+.submit{
+
+    width:100%;
+
+    border:0;
+
+    padding:14px;
+
+    border-radius:11px;
+
+    color:white;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0284c7,
+            #0891b2
+        );
+
+    box-shadow:
+        0 10px 30px
+        rgba(14,165,233,.15);
+
+    transition:.25s;
+
+}
+
+.submit:hover{
+
+    transform:translateY(-1px);
+
+    box-shadow:
+        0 14px 35px
+        rgba(14,165,233,.24);
+
+}
+
+.submit:disabled{
+
+    opacity:.55;
+
+    cursor:not-allowed;
+
+}
+
+
+/* =====================================
+   STATUS
+===================================== */
+
+.status{
+
+    min-height:20px;
+
+    margin-top:16px;
+
+    text-align:center;
+
+    font-size:12px;
+
+    line-height:1.8;
+
+}
+
+.status.error{
+    color:var(--danger);
+}
+
+.status.success{
+    color:var(--success);
+}
+
+.status.info{
+    color:var(--blue);
+}
+
+
+/* =====================================
+   USER
+===================================== */
+
+.user-panel{
+
+    display:none;
+
+    text-align:center;
+
+}
+
+.user-panel.show{
+
+    display:block;
+
+}
+
+.avatar{
+
+    width:70px;
+    height:70px;
+
+    margin:0 auto 15px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0369a1,
+            #0e7490
+        );
+
+    font-size:28px;
+
+    box-shadow:
+        0 0 35px
+        rgba(34,211,238,.18);
+
+}
+
+.user-email{
+
+    color:#9bb3c5;
+
+    font-size:13px;
+
+    direction:ltr;
+
+    margin-bottom:20px;
+
+}
+
+.enter-btn{
+
+    display:block;
+
+    width:100%;
+
+    padding:13px;
+
+    border-radius:11px;
+
+    text-decoration:none;
+
+    color:white;
+
+    background:#0284c7;
+
+    margin-bottom:10px;
+
+}
+
+.logout{
+
+    width:100%;
+
+    padding:11px;
+
+    border-radius:11px;
+
+    border:1px solid
+        rgba(251,113,133,.2);
+
+    color:#fb7185;
+
+    background:
+        rgba(251,113,133,.05);
+
+    cursor:pointer;
+
+}
+
+
+/* =====================================
+   FOOTER
+===================================== */
+
+.footer{
+
+    text-align:center;
+
+    margin-top:18px;
+
+    color:#40576a;
+
+    font-size:10px;
+
+}
+
+.footer span{
+
+    color:#1e789e;
+
+}
+
+
+/* =====================================
+   MOBILE
+===================================== */
+
+@media(max-width:500px){
+
+    .page{
+
+        padding:16px;
+
+    }
+
+    .card{
+
+        padding:22px 18px;
+
+        border-radius:20px;
+
+    }
+
+    .brand h1{
+
+        font-size:20px;
+
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<div class="background">
+
+    <div class="grid"></div>
+
+    <div class="orb one"></div>
+
+    <div class="orb two"></div>
+
+</div>
+
+
+<div class="page">
+
+    <div class="auth-container">
+
+
+        <!-- BRAND -->
+
+        <div class="brand">
+
+            <div class="logo">
+                🧬
+            </div>
+
+            <h1>
+                AmirYasin Research
+            </h1>
+
+            <p>
+                Scientific Workspace
+            </p>
+
+        </div>
+
+
+        <!-- CARD -->
+
+        <div class="card">
+
+            <div class="scan-line"></div>
+
+
+            <!-- AUTH -->
+
+            <div id="authArea">
+
+
+                <div class="tabs">
+
+                    <button
+                        class="tab active"
+                        id="loginTab"
+                        onclick="switchTab('login')">
+
+                        ورود
+
+                    </button>
+
+                    <button
+                        class="tab"
+                        id="signupTab"
+                        onclick="switchTab('signup')">
+
+                        ثبت‌نام
+
+                    </button>
+
+                </div>
+
+
+                <!-- LOGIN -->
+
+                <div
+                    id="loginForm"
+                    class="form active">
+
+                    <div class="form-title">
+
+                        <h2>
+                            خوش برگشتی
+                        </h2>
+
+                        <p>
+                            وارد فضای علمی شخصی خودت شو.
+                        </p>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            ایمیل
+                        </label>
+
+                        <div class="input-wrap">
+
+                            <span class="input-icon">
+                                @
+                            </span>
+
+                            <input
+                                id="loginEmail"
+                                type="email"
+                                dir="ltr"
+                                placeholder="your@email.com"
+                                autocomplete="email">
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            رمز عبور
+                        </label>
+
+                        <div class="input-wrap">
+
+                            <span class="input-icon">
+                                🔒
+                            </span>
+
+                            <input
+                                id="loginPassword"
+                                type="password"
+                                dir="ltr"
+                                placeholder="••••••••"
+                                autocomplete="current-password">
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="submit"
+                        id="loginButton"
+                        onclick="loginUser()">
+
+                        ورود به Workspace
+
+                    </button>
+
+                </div>
+
+
+                <!-- SIGNUP -->
+
+                <div
+                    id="signupForm"
+                    class="form">
+
+                    <div class="form-title">
+
+                        <h2>
+                            ساخت حساب جدید
+                        </h2>
+
+                        <p>
+                            وارد دنیای علمی خودت شو.
+                        </p>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            ایمیل
+                        </label>
+
+                        <div class="input-wrap">
+
+                            <span class="input-icon">
+                                @
+                            </span>
+
+                            <input
+                                id="signupEmail"
+                                type="email"
+                                dir="ltr"
+                                placeholder="your@email.com"
+                                autocomplete="email">
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            رمز عبور
+                        </label>
+
+                        <div class="input-wrap">
+
+                            <span class="input-icon">
+                                🔒
+                            </span>
+
+                            <input
+                                id="signupPassword"
+                                type="password"
+                                dir="ltr"
+                                placeholder="حداقل ۶ کاراکتر"
+                                autocomplete="new-password">
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="submit"
+                        id="signupButton"
+                        onclick="signupUser()">
+
+                        ایجاد حساب
+
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="status"
+                    class="status">
+                </div>
+
+            </div>
+
+
+            <!-- LOGGED IN -->
+
+            <div
+                id="userPanel"
+                class="user-panel">
+
+                <div class="avatar">
+                    👤
+                </div>
+
+                <h2>
+                    ورود موفق بود
+                </h2>
+
+                <div
+                    id="userEmail"
+                    class="user-email">
+                </div>
+
+                <a
+                    class="enter-btn"
+                    href="https://amiryasinhosseini.github.io">
+
+                    ورود به سایت
+
+                </a>
+
+                <button
+                    class="logout"
+                    onclick="logoutUser()">
+
+                    خروج از حساب
+
+                </button>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="footer">
+
+            AMIRYASIN /
+            <span>SCIENTIFIC SYSTEM</span>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<script>
+
+
+/* =====================================
+   SUPABASE
+===================================== */
+
+const SUPABASE_URL =
+    "PROJECT_URL_خودت";
+
+const SUPABASE_KEY =
+    "PUBLISHABLE_KEY_خودت";
+
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+/* =====================================
+   TAB
+===================================== */
+
+function switchTab(type){
+
+    const login =
+        document.getElementById(
+            "loginForm"
+        );
+
+    const signup =
+        document.getElementById(
+            "signupForm"
+        );
+
+    const loginTab =
+        document.getElementById(
+            "loginTab"
+        );
+
+    const signupTab =
+        document.getElementById(
+            "signupTab"
+        );
+
+
+    if(type === "login"){
+
+        login.classList.add("active");
+
+        signup.classList.remove("active");
+
+        loginTab.classList.add("active");
+
+        signupTab.classList.remove("active");
+
+    }else{
+
+        signup.classList.add("active");
+
+        login.classList.remove("active");
+
+        signupTab.classList.add("active");
+
+        loginTab.classList.remove("active");
+
+    }
+
+
+    clearStatus();
+
+}
+
+
+/* =====================================
+   STATUS
+===================================== */
+
+function showStatus(
+    message,
+    type = "info"
+){
+
+    const box =
+        document.getElementById(
+            "status"
+        );
+
+    box.textContent =
+        message;
+
+    box.className =
+        "status " + type;
+
+}
+
+
+function clearStatus(){
+
+    const box =
+        document.getElementById(
+            "status"
+        );
+
+    box.textContent = "";
+
+    box.className =
+        "status";
+
+}
+
+
+/* =====================================
+   SIGN UP
+===================================== */
+
+async function signupUser(){
+
+    const email =
+        document
+        .getElementById(
+            "signupEmail"
+        )
+        .value
+        .trim();
+
+    const password =
+        document
+        .getElementById(
+            "signupPassword"
+        )
+        .value;
+
+
+    if(!email || !password){
+
+        showStatus(
+            "ایمیل و رمز عبور را وارد کن.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(password.length < 6){
+
+        showStatus(
+            "رمز عبور باید حداقل ۶ کاراکتر باشد.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const button =
+        document.getElementById(
+            "signupButton"
+        );
+
+    button.disabled = true;
+
+    button.textContent =
+        "در حال ایجاد حساب...";
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient.auth.signUp({
+
+        email,
+
+        password,
+
+        options:{
+
+            emailRedirectTo:
+                "https://amiryasinhosseini.github.io"
+
+        }
+
+    });
+
+
+    button.disabled = false;
+
+    button.textContent =
+        "ایجاد حساب";
+
+
+    if(error){
+
+        showStatus(
+            translateError(error.message),
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(data.user){
+
+        showStatus(
+            "حساب ساخته شد ✓ ایمیل تأیید را بررسی کن.",
+            "success"
+        );
+
+    }
+
+}
+
+
+/* =====================================
+   LOGIN
+===================================== */
+
+async function loginUser(){
+
+    const email =
+        document
+        .getElementById(
+            "loginEmail"
+        )
+        .value
+        .trim();
+
+    const password =
+        document
+        .getElementById(
+            "loginPassword"
+        )
+        .value;
+
+
+    if(!email || !password){
+
+        showStatus(
+            "ایمیل و رمز عبور را وارد کن.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const button =
+        document.getElementById(
+            "loginButton"
+        );
+
+    button.disabled = true;
+
+    button.textContent =
+        "در حال ورود...";
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient.auth.signInWithPassword({
+
+        email,
+
+        password
+
+    });
+
+
+    button.disabled = false;
+
+    button.textContent =
+        "ورود به Workspace";
+
+
+    if(error){
+
+        showStatus(
+            translateError(error.message),
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    showLoggedIn(
+        data.user
+    );
+
+}
+
+
+/* =====================================
+   LOGGED IN UI
+===================================== */
+
+function showLoggedIn(user){
+
+    document
+        .getElementById(
+            "authArea"
+        )
+        .style.display =
+        "none";
+
+
+    document
+        .getElementById(
+            "userPanel"
+        )
+        .classList.add(
+            "show"
+        );
+
+
+    document
+        .getElementById(
+            "userEmail"
+        )
+        .textContent =
+        user.email;
+
+}
+
+
+/* =====================================
+   LOGOUT
+===================================== */
+
+async function logoutUser(){
+
+    await supabaseClient.auth.signOut();
+
+    location.reload();
+
+}
+
+
+/* =====================================
+   CHECK SESSION
+===================================== */
+
+async function checkSession(){
+
+    const {
+        data
+    } =
+    await supabaseClient.auth.getSession();
+
+
+    if(data.session){
+
+        showLoggedIn(
+            data.session.user
+        );
+
+    }
+
+}
+
+
+/* =====================================
+   ERROR TRANSLATION
+===================================== */
+
+function translateError(error){
+
+    if(
+        error.includes(
+            "Invalid login credentials"
+        )
+    ){
+
+        return "ایمیل یا رمز عبور اشتباه است.";
+
+    }
+
+
+    if(
+        error.includes(
+            "User already registered"
+        )
+    ){
+
+        return "این ایمیل قبلاً ثبت‌نام کرده است.";
+
+    }
+
+
+    if(
+        error.includes(
+            "Password should be at least"
+        )
+    ){
+
+        return "رمز عبور خیلی کوتاه است.";
+
+    }
+
+
+    if(
+        error.includes(
+            "Email not confirmed"
+        )
+    ){
+
+        return "ابتدا ایمیل خودت را تأیید کن.";
+
+    }
+
+
+    return error;
+
+}
+
+
+/* =====================================
+   AUTH STATE
+===================================== */
+
+supabaseClient.auth.onAuthStateChange(
+    function(event, session){
+
+        if(session){
+
+            showLoggedIn(
+                session.user
+            );
+
+        }
+
+    }
+);
+
+
+/* =====================================
+   START
+===================================== */
+
+checkSession();
+
+</script>
+
+</body>
+</html>
+```
