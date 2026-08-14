@@ -1868,15 +1868,19 @@ async function signupUser(){
         return;
     }
 
-    const {
-        data,
-        error
-    } =
-    await supabaseClient.auth.signUp({
-        email: email,
-        password: password
-    });
+const {
+    data,
+    error
+} =
+await supabaseClient.auth.signUp({
+    email: email,
+    password: password,
 
+    options: {
+        emailRedirectTo:
+            "https://amiryasinhosseini.github.io"
+    }
+});
     if(error){
 
         showAuthStatus(
