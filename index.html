@@ -778,6 +778,173 @@
   }
 }
 </style>
+  <style>
+.signup-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+
+  padding: 24px;
+
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+
+  transition: .3s ease;
+}
+
+.signup-popup.show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.signup-popup-card {
+  position: relative;
+
+  width: 390px;
+  max-width: calc(100vw - 30px);
+
+  display: flex;
+  gap: 15px;
+
+  padding: 20px;
+
+  border: 1px solid rgba(56,189,248,.25);
+  border-radius: 16px;
+
+  background: rgba(5,15,27,.97);
+
+  box-shadow:
+    0 25px 70px rgba(0,0,0,.55),
+    0 0 35px rgba(56,189,248,.10);
+
+  backdrop-filter: blur(20px);
+
+  transform: translateY(35px);
+  transition: .4s ease;
+}
+
+.signup-popup.show .signup-popup-card {
+  transform: translateY(0);
+}
+
+.signup-popup-icon {
+  width: 45px;
+  height: 45px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  color: #38bdf8;
+
+  background: rgba(56,189,248,.10);
+
+  font-size: 20px;
+}
+
+.signup-popup-content h3 {
+  margin: 5px 0 8px;
+
+  color: #eaf7ff;
+
+  font-size: 16px;
+}
+
+.signup-popup-content p {
+  margin: 0 0 15px;
+
+  color: #8196a8;
+
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+.signup-popup-label {
+  color: #38bdf8;
+
+  font-size: 8px;
+  font-weight: bold;
+
+  letter-spacing: 1.4px;
+}
+
+.signup-popup-close {
+  position: absolute;
+
+  top: 8px;
+  right: 9px;
+
+  border: 0;
+  background: transparent;
+
+  color: #7890a6;
+
+  font-size: 18px;
+
+  cursor: pointer;
+}
+
+.signup-popup-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.signup-popup-primary {
+  flex: 1;
+
+  padding: 9px;
+
+  text-align: center;
+
+  color: white;
+  text-decoration: none;
+
+  border-radius: 8px;
+
+  background: linear-gradient(
+    135deg,
+    #0284c7,
+    #0891b2
+  );
+
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.signup-popup-secondary {
+  padding: 9px 12px;
+
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 8px;
+
+  color: #7890a6;
+  background: rgba(255,255,255,.03);
+
+  font-size: 10px;
+
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .signup-popup {
+    padding: 12px;
+  }
+
+  .signup-popup-card {
+    width: 100%;
+  }
+}
+</style>
 </head>
 
 <body>
@@ -2105,5 +2272,23 @@ checkLogin();
   </div>
 
 </div>
+  <script>
+const signupPopup = document.getElementById("signupPopup");
+const closeButton = document.getElementById("signupPopupClose");
+const laterButton = document.getElementById("signupPopupLater");
+
+function closeSignupPopup() {
+  signupPopup.classList.remove("show");
+}
+
+closeButton.addEventListener("click", closeSignupPopup);
+laterButton.addEventListener("click", closeSignupPopup);
+
+window.addEventListener("load", function () {
+  setTimeout(function () {
+    signupPopup.classList.add("show");
+  }, 1800);
+});
+</script>
 </body>
 </html>
